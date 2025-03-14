@@ -69,11 +69,6 @@ div.buttonContainer button{
     color: #e0dbdb;
 }
 
-div.homePageHeader{
-    width: 100%;
-    height: 20px;
-    background: #e6ed8b;
-}
 
 div.homePageBanner{
     background: url('../assets/images/banner.jpg') no-repeat center center fixed;
@@ -85,6 +80,7 @@ div.homePageBanner{
 div.bannerContainer{
     width: 100%;
     max-width: 900px;
+    /*height: 70vh;*/
     margin: 0 auto;
 }
 
