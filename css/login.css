@@ -71,8 +71,8 @@ div.buttonContainer button{
 
 
 div.homePageBanner{
-    background: url('../assets/images/banner.jpg') no-repeat center center fixed;
-    background-size: cover;
+    background: url('../assets/images/banner-background.jpg') no-repeat center center;
+    background-size: auto;
     padding-top: 50px;
     padding-bottom: 100px;
 }
@@ -80,7 +80,7 @@ div.homePageBanner{
 div.bannerContainer{
     width: 100%;
     max-width: 900px;
-    /*height: 70vh;*/
+    height: 20vh;
     margin: 0 auto;
 }
 
@@ -130,3 +130,110 @@ div.bannerIcons a:hover{
     background: rgb(155, 153, 19);
     transition: .5s all;
 }
+
+div.homePageFunctionsShowcase{
+    display: flex;
+    flex-direction: column;
+}
+
+div.functionShowCaseHeader{
+    padding: 10px 10px;
+    text-align: center;
+}
+
+div.functionDescription{
+    padding: 30px;
+    text-align: center;
+}
+
+div.functionDescription span.functionIcon{
+    height: 80px;
+    width: 80px;
+    display: inline-block;
+    font-size: 40px;
+    background: #f685a1;
+    color: #fff;
+    padding-left: 2px;
+    padding-top: 20px;
+    border-radius: 50%;
+}
+
+div.functionDescription h3.functionTitle{
+    margin-bottom: 5px;
+}
+
+div.functionDescription p.functionBody{
+    color: #848484;
+}
+
+div.homePageEmailPrompt{
+    background: #e3e3e3;
+    padding: 50px 0px;
+}
+
+div.emailRequestFormContainer{
+    display: flex;
+    flex-direction: row;
+}
+
+div.emailRequestForm{
+    width: 40%;
+}
+
+div.homePageEmailImage{
+    width: 600px;
+    height: 400px;
+    margin: 0 auto;
+}
+
+div.homePageEmailPrompt h3{
+    padding-left: 100px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+div.homePageEmailPrompt p{
+    padding-left: 150px;
+    color: #848484;
+    line-height: 150%;
+    margin-bottom: 30px;
+}
+
+div.formContainer{
+    width: 80%;
+    position: relative;
+    padding-left: 200px;
+}
+
+div.formContainer input{
+    width: 100%;
+    padding: 10px 15px;
+    border-radius: 15px;
+    border: none;
+}
+
+div.formContainer input:focus{
+    outline: none;
+}
+
+div.formContainer button{
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    font-size: 22px;
+    padding: 0px 10px;
+    background: #f685a1;
+    border: none;
+    color: #fff;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+.homePageEmailImage{
+    width: 80%;
+}
+
+
+
+
