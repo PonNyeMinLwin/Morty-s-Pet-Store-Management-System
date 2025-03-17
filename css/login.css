@@ -72,7 +72,7 @@ div.buttonContainer button{
 
 div.homePageBanner{
     background: url('../assets/images/banner-background.jpg') no-repeat center center;
-    background-size: auto;
+    background-size: cover;
     padding-top: 50px;
     padding-bottom: 100px;
 }
@@ -86,14 +86,14 @@ div.bannerContainer{
 
 div.bannerHeader h1{
     font-size: 50px;
-    color: rgba(155, 153, 19, 1);
+    color: #fb4b77;
     line-height: 100%;
 }
 
 div.bannerHeader p{
     margin-top: 5px;
     font-size: 20px;
-    color: rgb(155, 153, 19);
+    color: #fb4b77;
     line-height: 100%;
 }
 
@@ -101,6 +101,17 @@ p.bannerBody{
     margin-top: 10px;
     font-size: 20px;
     color: rgb(0, 0, 0);
+}
+
+div.browserLoginLink{
+    font-size: 25px;
+    text-decoration: none;
+}
+
+div.browserLoginLink:hover{
+    font-weight: bold;
+    color: #f8a4b9;
+    transition: 0.5s all;
 }
 
 div.bannerIcons{
@@ -127,7 +138,7 @@ div.bannerIcons a:first-child{
 div.bannerIcons a:hover{
     color: #ffffff;
     font-size: 25px;
-    background: rgb(155, 153, 19);
+    background: #f685a1;
     transition: .5s all;
 }
 
@@ -144,6 +155,13 @@ div.functionShowCaseHeader{
 div.functionDescription{
     padding: 30px;
     text-align: center;
+}
+
+div.functionDescription:hover{
+    border-top: 2px solid #f8a4b9;
+    transition: 0.5s all;
+    border-bottom: 2px solid #f8a4b9;
+    transition: 0.5s all;
 }
 
 div.functionDescription span.functionIcon{
@@ -171,7 +189,7 @@ div.homePageEmailPrompt{
     padding: 50px 0px;
 }
 
-div.emailRequestFormContainer{
+div.homePagePromptContainer{
     display: flex;
     flex-direction: row;
 }
@@ -187,16 +205,19 @@ div.homePageEmailImage{
 }
 
 div.homePageEmailPrompt h3{
+    padding-top: 60px;
     padding-left: 100px;
     text-align: center;
     margin-bottom: 10px;
+    font-size: 30px;
 }
 
 div.homePageEmailPrompt p{
     padding-left: 150px;
     color: #848484;
     line-height: 150%;
-    margin-bottom: 30px;
+    margin-bottom: 60px;
+    margin-top: 30px;
 }
 
 div.formContainer{
@@ -232,8 +253,57 @@ div.formContainer button{
 
 .homePageEmailImage{
     width: 80%;
+    height: 100%;
 }
 
+div.homePageSocialsPrompt{
+    text-align: center;
+    padding: 50px 20px;
+}
 
+h3.socialsHeader{
+    font-size: 30px;
+}
 
+p.socialsBody{
+    margin-top: 5px;
+    margin-bottom: 15px;
+    color: #848484;
+}
 
+div.socialsIconsContainer a{
+    font-size: 20px;
+    height: 50px;
+    width: 50px;
+    display: inline-block;
+    padding-top: 15px;
+    background: #d4d4d4;
+    border-radius: 50%;
+    color: #fff;
+    margin-left: 20px;
+}
+
+div.socialsIconsContainer a:hover{
+    background: #f8a4b9;
+    transition: 0.3s all;
+}
+
+div.footer{
+    background: #e3e3e3;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    text-align: center;
+}
+
+div.footer a{
+    color: #848484;
+    margin-left: 60px;
+    padding-left: 200px;
+    text-decoration: none;
+}
+
+div.footer a:hover{
+    font-weight: bold;
+    color: #f8a4b9;
+    transition: 0.5s all;
+}
