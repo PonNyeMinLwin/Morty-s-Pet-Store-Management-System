@@ -21,7 +21,7 @@
                     Install this system using the links above. You can also:  
                 </p>
                 <div class="browserLoginLink">
-                    <a href="login.html">Login With Browser</a>
+                    <a href="login.php">Login With Browser</a>
                 </div>
             </div>
         </div>

@@ -1,3 +1,11 @@
+<?php
+    if($_POST){
+        var_dump($_POST);
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+    }
+?>
+
 <html>
     <head>
         <title>Login Page - Morty's Pet Store Management System</title>
@@ -11,14 +19,14 @@
                 <p>Pet Store Management System<p>
             </div>
             <div class="loginMenu">
-                <form action="">
+                <form action="login.php" method="POST">
                     <div class="inputContainer">
                         <label for="">Username</label>
-                        <input placeholder="username" type="text" />
+                        <input placeholder="username" name="username" type="text" />
                     </div>
                     <div class="inputContainer">
                         <label for="">Password</label>
-                        <input placeholder="password" type="password" />
+                        <input placeholder="password" name="password" type="password" />
                     </div>
                     <div class="buttonContainer">
                         <button>Enter</button>
