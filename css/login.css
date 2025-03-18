@@ -351,13 +351,16 @@ div.dashBoardUserSection img{
     border-radius: 50%;
     border: 2px solid #f685a1;
     margin-right: 5px;
+    vertical-align: middle;
 }
 
 div.dashBoardUserSection span{
+    top: 20%;
     font-size: 20px;
     text-transform: uppercase;
     color: #fff;
     display: inline-block;
+    margin-bottom: 40px;
 }
 
 ul.dashBoardSideBarMenus {
@@ -375,6 +378,10 @@ ul.dashBoardSideBarMenus li a{
     text-decoration: none;
     color: #fff;
     font-size: 20px;
+}
+
+ul.dashBoardSideBarMenus li a i{
+    font-size: 25px;
 }
 
 ul.dashBoardSideBarMenus li.sideBarActive{
