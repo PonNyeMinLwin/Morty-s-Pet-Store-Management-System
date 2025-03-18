@@ -9,8 +9,7 @@ body#loginBody{
 
 div.loginHeader{
     text-align: center;
-    margin-bottom: 5px;
-    margin-top: 100px;
+    margin-top: 70px;
 }
 
 div.loginHeader h1{
@@ -23,7 +22,6 @@ div.loginHeader h1{
 div.loginHeader p{
     font-size: 60px;
     color:rgb(155, 153, 19);
-    margin: 0px;
     display: inline-block;
 }
 
@@ -71,6 +69,13 @@ div.buttonContainer button{
     color: #e0dbdb;
 }
 
+div#errorMessage{
+    background: #fff;
+    text-align: center;
+    color: red;
+    font-size: 20px;
+    padding: 10px;
+}
 
 /* Homepage Styling */
 div.homePageBanner{
@@ -419,3 +424,6 @@ div.contentMainBody{
     min-height: 800px;
     height: 100%;
 }
+
+
+

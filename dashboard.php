@@ -1,3 +1,12 @@
+<?php
+    // Starting the session
+    session_start();
+
+    if(!isset($_SESSION['user'])) header('location: index.php');
+    $user = $_SESSION['user'];
+?>
+
+<!DOCTYPE html>
 <html>
     <head>
         <title>Dashboard - Morty's Pet Store Management System</title>
@@ -10,7 +19,7 @@
                 <h3 class="sideBarTitle" id="sideBarTitle">Morty's Pet Store Management System</h3>
                 <div class="dashBoardUserSection">
                     <img src="assets/profiles/omni-man.jpg" alt="User Image" />
-                    <span>Omni-Man</span>
+                    <span><?= $user['first_name'] . ' ' . $user['last_name'] ?></span>
                 </div>
                 <div class="dashBoardSideBar">
                     <ul class="dashBoardSideBarMenus">
@@ -35,7 +44,7 @@
             <div class="dashBoardContentContainer" id="dashBoardContentContainer">
                 <div class="contentTopNavBar">
                     <a href="" id="toggleSideBarButton"><i class="fa-solid fa-bars"></i></a>
-                    <a href="" id="logOutButton"><i class="fa-solid fa-power-off"></i> Log Out</a>
+                    <a href="database/logout_page.php" id="logOutButton"><i class="fa-solid fa-power-off"></i> Log Out</a>
                 </div>
                 <div class="dashBoardContent">
                     <div class="contentMainBody">
