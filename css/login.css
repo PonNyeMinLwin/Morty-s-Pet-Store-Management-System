@@ -435,7 +435,7 @@ form::after{
 
 form.addUserForm{
     background: #f4f6f9;
-    width: 40%;
+    width: 90%;
     margin: 0 auto;
     padding: 10px;
     border: 2px solid #d6d7da;
@@ -484,6 +484,26 @@ p.responseMessage_error{
 
 p.responseMessage_success{
     background: rgba(0, 128, 0, 0.5);
+}
+
+div.row{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+div.column{
+    background: url('../assets/images/dog-food.jpg') no-repeat center center fixed;
+    width: 100%;
+}
+
+div.addUserFormColumn{
+    width: 42%;
+}
+
+div.userListColumn{
+    width: 58%;
 }
 
 
