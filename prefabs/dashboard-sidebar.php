@@ -7,11 +7,12 @@
         </div>
         <div class="dashBoardSideBar">
             <ul class="dashBoardSideBarMenus">
-                <li class="sideBarList">
-                    <a href=""><i class="fa-solid fa-gauge-high"></i><span class="sideBarText"> Dashboard</span></a>
+                <!-- class="sideBarList" -->
+                <li>
+                    <a href="./dashboard.php"><i class="fa-solid fa-gauge-high"></i><span class="sideBarText"> Dashboard</span></a>
                 </li>
                 <li>
-                    <a href=""><i class="fa-solid fa-chart-line"></i><span class="sideBarText"> Analytics</span></a>
+                    <a href="./add-users.php"><i class="fa-solid fa-users"></i><span class="sideBarText"> Add Users</span></a>
                 </li>
                 <li>
                     <a href=""><i class="fa-solid fa-bell"></i><span class="sideBarText"> Quick Alerts</span></a>

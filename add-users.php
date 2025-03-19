@@ -1,3 +1,12 @@
+<?php
+    // Starting the session
+    session_start();
+
+    if(!isset($_SESSION['user'])) header('location: index.php');
+    $_SESSION['table'] = 'users';
+    $user = $_SESSION['user'];
+?>
+
 <html>
     <head>
         <title>Dashboard - Morty's Pet Store Management System</title>
@@ -6,51 +15,48 @@
     </head>
     <body>
         <div id="dashBoardMainContainer">
+            <?php include('prefabs/dashboard-sidebar.php') ?>
             <div class="dashBoardContentContainer" id="dashBoardContentContainer">
-                <div class="contentTopNavBar">
-                    <a href="" id="toggleSideBarButton"><i class="fa-solid fa-bars"></i></a>
-                    <a href="database/logout_page.php" id="logOutButton"><i class="fa-solid fa-power-off"></i> Log Out</a>
-                </div>
+                <?php include('prefabs/dashboard-top-nav-bar.php') ?>
                 <div class="dashBoardContent">
                     <div class="contentMainBody">
-
+                        <div id="addUserFormContainer">
+                            <form action="database/add-function.php" method="POST" class="addUserForm">
+                                <div class="addUserFormInputBox">
+                                    <label for="first_name">First Name</label>
+                                    <input type="text" class="addUserInput" id="first_name" name="first_name" />
+                                </div>
+                                <div class="addUserFormInputBox">
+                                    <label for="last_name">Last Name</label>
+                                    <input type="text" class="addUserInput" id="last_name" name="last_name" />
+                                </div>
+                                <div class="addUserFormInputBox">
+                                    <label for="email">Email</label>
+                                    <input type="email" class="addUserInput" id="email" name="email" />
+                                </div>
+                                <div class="addUserFormInputBox">
+                                    <label for="password">Password</label>
+                                    <input type="password" class="addUserInput" id="password" name="password" />
+                                </div>
+                                <button type="submit" class="addUserBtn"><i class="fa-solid fa-user-plus"></i> Add User</button>
+                            </form>
+                            <?php 
+                                if(isset($_SESSION['response'])) { 
+                                    $response_message = $_SESSION['response']['message'];
+                                    $is_success = $_SESSION['response']['success'];
+                            ?>
+                                <div class="responseMessage">
+                                    <p class="<?= $is_success ? 'responseMessage_success' : 'responseMessage_error' ?>">
+                                        <?= $response_message ?>
+                                    </p>
+                                </div>
+                            <?php unset($_SESSION['response']); } ?>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    <script>
-        var sideBarActive = true;
 
-        toggleSideBarButton.addEventListener('click', (event) => {
-            event.preventDefault();
-
-            if(sideBarActive) {
-                dashBoardToggleSideBar.style.width = '10%';
-                dashBoardToggleSideBar.style.transition = '0.3s all';
-                dashBoardContentContainer.style.width = '90%';
-                sideBarTitle.style.fontSize = '20px';
-
-
-                sideBarText = document.getElementsByClassName('sideBarText');
-                for(var i = 0; i < sideBarText.length; i++) {
-                    sideBarText[i].style.display = 'none';
-                }
-                document.getElementsByClassName('dashBoardSideBarMenus')[0].style.textAlign = 'center';
-                sideBarActive = false;
-            } else {
-                dashBoardToggleSideBar.style.width = '20%';
-                dashBoardContentContainer.style.width = '80%';
-                sideBarTitle.style.fontSize = '25px';
-
-                sideBarText = document.getElementsByClassName('sideBarText');
-                for(var i = 0; i < sideBarText.length; i++) {
-                    sideBarText[i].style.display = 'inline-block';
-                    sideBarText[i].style.padding = '0px 8px';
-                }
-                document.getElementsByClassName('dashBoardSideBarMenus')[0].style.textAlign = 'left';
-                sideBarActive = true;
-            }
-        });
-    </script>    
+    <script src="js/script.js"></script>    
     </body>
 </html>

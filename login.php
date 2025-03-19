@@ -5,7 +5,7 @@
     $error_message = '';
 
     if($_POST){
-        include('database/database_connector.php');
+        include('database/connector.php');
         
         $username = $_POST['username'];
         $password = $_POST['password'];
