@@ -326,7 +326,7 @@ div.footer a:hover{
 div.dashBoardToggleSideBar{
     width: 18%;
     background: #332323;
-    height: 100vh;
+    height: 300vh;
 }
 
 div.dashBoardContentContainer{
@@ -420,7 +420,7 @@ div.dashBoardContent{
 }
 
 div.contentMainBody{
-    background: url('../assets/images/polite-dog.jpg') no-repeat center center fixed;
+    background: url('../assets/images/beagle.jpg') no-repeat center center fixed;
     min-height: 800px;
     height: 100%;
 }
@@ -459,7 +459,7 @@ div.addUserFormInputBox{
 }
 
 div#addUserFormContainer{
-    padding-top: 60px;
+    padding-top: 0px;
 }
 
 button.addUserBtn{
@@ -494,7 +494,7 @@ div.row{
 }
 
 div.column{
-    background: url('../assets/images/polite-dog.jpg') no-repeat center center fixed;
+    background: url('../assets/images/beagle.jpg') no-repeat center center fixed;
     width: 100%;
     padding: 0px;
 }
@@ -515,7 +515,7 @@ h1.columnHeader{
     padding-bottom: 10px;
     padding: 10px;
     border-left: 4px solid #f685a1;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
     max-width: 100%;
 }
 
