@@ -70,7 +70,8 @@
                                                     <th>Last Name</th>
                                                     <th>Email</th>
                                                     <th>Created At</th>
-                                                    <th>Last Updated At</th>
+                                                    <th>Updated At</th>
+                                                    <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -82,6 +83,10 @@
                                                         <td><?= $user['email'] ?></td>
                                                         <td><?= date('F d, Y @ h:i:s A', strtotime($user['created_at'])) ?></td>
                                                         <td><?= date('F d, Y @ h:i:s A', strtotime($user['last_updated_at'])) ?></td>
+                                                        <td>
+                                                            <a href=""><i class="fa-solid fa-pencil"></i> Edit</a>
+                                                            <a href="" class="deleteUserIcon" data-userid="<?= $user['id'] ?>" data-fname="<?= $user['first_name'] ?>" data-lname="<?= $user['last_name'] ?>"><i class="fa-solid fa-trash"></i> Delete</a>
+                                                        </td>
                                                     </tr>
                                                 <?php } ?>
                                             </tbody>
@@ -96,6 +101,54 @@
             </div>
         </div>
 
-    <script src="js/script.js"></script>    
+    <script src="js/script.js"></script> 
+    <script src="js/jquery-3.7.1.min.js"></script> 
+    <script>
+        function script() {
+
+            this.initialize = function() {
+                this.registerEvents();
+            },
+
+            this.registerEvents = function() {
+                document.addEventListener('click', function(e) {
+                    targetElement = e.target;
+
+                    if(e.target.classList.contains('deleteUserIcon')) {
+                        e.preventDefault();
+                        userId = targetElement.dataset.userid;
+                        fname = targetElement.dataset.fname;
+                        lname = targetElement.dataset.lname;
+                        fullName = fname + ' ' + lname;
+
+                        if(window.confirm('Are you sure you want to delete this user: ' + fullName + '?')) {
+                            $.ajax({
+                                method: 'POST',
+                                data: {
+                                    id: userId,
+                                    f_name: fname,
+                                    l_name: lname
+                                },
+                                url: 'database/delete-function.php',
+                                dataType: 'json',
+                                success: function(data) {
+                                    if(data.success) {
+                                        if(window.confirm(data.message)) {
+                                            location.reload();
+                                        }
+                                    } else { window.alert(data.message); }
+                                }
+                            });
+                        } else {
+                            console.log('will not delete');
+                        }
+                    }
+                });
+            }
+        }
+
+        var script = new script;
+        script.initialize();
+    </script>  
     </body>
 </html>

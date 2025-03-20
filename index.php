@@ -61,7 +61,7 @@
                     </form>
                 </div>
                 <div class="homePageEmailImage">
-                    <img src="assets/images/pet-background.jpg">
+                    <img src="assets/images/close-up-pet-accessories.jpg">
                 </div>
             </div>
         </div>
