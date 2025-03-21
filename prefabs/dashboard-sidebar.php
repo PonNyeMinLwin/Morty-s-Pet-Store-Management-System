@@ -7,21 +7,23 @@
         </div>
         <div class="dashBoardSideBar">
             <ul class="dashBoardSideBarMenus">
-                <!-- class="sideBarList" -->
-                <li>
+                <li class="sideBarMainList">
                     <a href="./dashboard.php"><i class="fa-solid fa-gauge-high"></i><span class="sideBarText"> Dashboard</span></a>
                 </li>
-                <li>
-                    <a href="./add-users.php"><i class="fa-solid fa-users"></i><span class="sideBarText"> Add Users</span></a>
+                <li class="sideBarMainList">
+                    <a href=""><i class="fa-solid fa-paw"></i><span class="sideBarText">Product Management</span></a>
                 </li>
-                <li>
-                    <a href=""><i class="fa-solid fa-bell"></i><span class="sideBarText"> Quick Alerts</span></a>
+                <li class="sideBarMainList">
+                    <a href=""><i class="fa-solid fa-dolly"></i><span class="sideBarText">Supplier Management</span></a>
                 </li>
-                <li>
-                    <a href=""><i class="fa-solid fa-cash-register"></i><span class="sideBarText"> Sales & Stock Report</span></a>
-                </li>
-                <li>
-                    <a href=""><i class="fa-solid fa-gear"></i><span class="sideBarText"> Settings</span></a>
+                <li class="sideBarMainList">
+                    <a href="javascript:void(0)" class="dropDownMenuLink">
+                        <i class="fa-solid fa-users"></i><span class="sideBarText">User Management</span><i class="fa-solid fa-angle-left leftIconArrow"></i>
+                    </a>
+                    <ul class="dropDownMenus">
+                        <li><a href="#" class="dropDownMenu"><i class="fa-regular fa-circle"></i> View User</a></li>
+                        <li><a href="#" class="dropDownMenu"><i class="fa-regular fa-circle"></i> Add User</a></li>
+                    </ul>
                 </li>
             </ul>
         </div>
