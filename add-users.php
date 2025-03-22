@@ -12,7 +12,7 @@
 <html>
     <head>
         <title>Dashboard - Morty's Pet Store Management System</title>
-        <link rel="stylesheet" type="text/css" href="css/login.css">
+        <link rel="stylesheet" type="text/css" href="css/login.css?v=<?= time(); ?>">
         <!-- FontAwesome Kit (for logos) -->
         <script src="https://kit.fontawesome.com/65a31e3d12.js" crossorigin="anonymous"></script>
     </head>
@@ -115,7 +115,7 @@
     <!-- Bootstrap3-Dialog 1.35.4 JS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap3-dialog/1.35.4/js/bootstrap-dialog.js" integrity="sha512-AZ+KX5NScHcQKWBfRXlCtb+ckjKYLO1i10faHLPXtGacz34rhXU8KM4t77XXG/Oy9961AeLqB/5o0KTJfy2WiA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <!-- Custom JS Scripts -->
-    <script src="js/script.js"></script>  
+    <script src="js/script.js?v=<?= time(); ?>"></script>  
     
     <script>
         function script() {

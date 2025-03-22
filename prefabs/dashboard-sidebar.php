@@ -11,18 +11,36 @@
                     <a href="./dashboard.php"><i class="fa-solid fa-gauge-high"></i><span class="sideBarText"> Dashboard</span></a>
                 </li>
                 <li class="sideBarMainList">
-                    <a href=""><i class="fa-solid fa-paw"></i><span class="sideBarText">Product Management</span></a>
-                </li>
-                <li class="sideBarMainList">
-                    <a href=""><i class="fa-solid fa-dolly"></i><span class="sideBarText">Supplier Management</span></a>
-                </li>
-                <li class="sideBarMainList">
-                    <a href="javascript:void(0)" class="dropDownMenuLink">
-                        <i class="fa-solid fa-users"></i><span class="sideBarText">User Management</span><i class="fa-solid fa-angle-left leftIconArrow"></i>
+                    <a href="javascript:void(0);" class="dropDownFunction">
+                        <i class="fa-solid fa-paw dropDownFunction"></i>
+                        <span class="sideBarText dropDownFunction">Product Management</span>
+                        <i class="fa-solid fa-angle-left leftIconArrow dropDownFunction"></i>
                     </a>
                     <ul class="dropDownMenus">
-                        <li><a href="#" class="dropDownMenu"><i class="fa-regular fa-circle"></i> View User</a></li>
-                        <li><a href="#" class="dropDownMenu"><i class="fa-regular fa-circle"></i> Add User</a></li>
+                        <li><a href="#" class="functions"><i class="fa-regular fa-circle"></i>View Products</a></li>
+                        <li><a href="#" class="functions"><i class="fa-regular fa-circle"></i>Add Products</a></li>
+                    </ul>
+                </li>
+                <li class="sideBarMainList">
+                    <a href="javascript:void(0);" class="dropDownFunction">
+                        <i class="fa-solid fa-truck-fast dropDownFunction"></i>
+                        <span class="sideBarText dropDownFunction">Supplier Management</span>
+                        <i class="fa-solid fa-angle-left leftIconArrow dropDownFunction"></i>
+                    </a>
+                    <ul class="dropDownMenus">
+                        <li><a href="#" class="functions"><i class="fa-regular fa-circle"></i>View Suppliers</a></li>
+                        <li><a href="#" class="functions"><i class="fa-regular fa-circle"></i>Add Suppliers</a></li>
+                    </ul>
+                </li>
+                <li class="sideBarMainList">
+                    <a href="javascript:void(0);" class="dropDownFunction">
+                        <i class="fa-solid fa-users dropDownFunction"></i>
+                        <span class="sideBarText dropDownFunction">User Management</span>
+                        <i class="fa-solid fa-angle-left leftIconArrow dropDownFunction"></i>
+                    </a>
+                    <ul class="dropDownMenus">
+                        <li><a href="#" class="functions"><i class="fa-regular fa-circle"></i>View Users</a></li>
+                        <li><a href="#" class="functions"><i class="fa-regular fa-circle"></i>Add Users</a></li>
                     </ul>
                 </li>
             </ul>

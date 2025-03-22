@@ -36,7 +36,22 @@ toggleSideBarButton.addEventListener('click', (event) => {
 document.addEventListener('click', function(e) {
     let target = e.target;
 
-    if(target.classList.contains('dropDownMenuLink')) {
-        alert('Clicked');
+    if(target.classList.contains('dropDownFunction')) {
+        let dropDownDisplay = target.closest('li').querySelector('.dropDownMenus');
+        let dropDownArrow = target.closest('li').querySelector('.leftIconArrow');
+
+        // Checking if there is a drop down menu and changing icon
+        if(dropDownDisplay != null) {
+            if(dropDownDisplay.style.display === 'block') { 
+                dropDownDisplay.style.display = 'none'; 
+                dropDownArrow.classList.remove('fa-angle-down');
+                dropDownArrow.classList.add('fa-angle-left');
+                
+            } else { 
+                dropDownDisplay.style.display = 'block'; 
+                dropDownArrow.classList.remove('fa-angle-left');
+                dropDownArrow.classList.add('fa-angle-down');
+            }
+        }
     }
 });
