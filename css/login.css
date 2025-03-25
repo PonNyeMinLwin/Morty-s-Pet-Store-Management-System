@@ -597,4 +597,9 @@ i.leftIconArrow{
     border-radius: 5px;
 }
 
+.productImgs{
+    width: 100px;
+    height: 100px;
+}
+
 

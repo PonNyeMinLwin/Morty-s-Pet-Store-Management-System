@@ -1,3 +1,7 @@
+<?php
+    $user = $_SESSION['user'];
+?>
+
 <html>
     <div class="dashBoardToggleSideBar" id="dashBoardToggleSideBar">
         <h3 class="sideBarTitle" id="sideBarTitle">Morty's Pet Store Management System</h3>

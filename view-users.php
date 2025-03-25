@@ -1,12 +1,13 @@
 <?php
     // Starting the session
     session_start();
-
     if(!isset($_SESSION['user'])) header('location: index.php');
+
     $_SESSION['table'] = 'users';
     $user = $_SESSION['user'];
 
-    $usersList = include('database/show-database-function.php');
+    $_SESSION['table'] = 'users';
+    $usersList = include('database/show-function.php');
 ?>
 
 <html>
@@ -69,7 +70,6 @@
     
     <script>
         function script() {
-
             this.initialize = function() {
                 this.registerEvents();
             },
@@ -87,29 +87,25 @@
 
                         BootstrapDialog.confirm({
                             type: BootstrapDialog.TYPE_DANGER,
-                            message: 'Are you sure you want to delete this user: ' + fullName + '?',
+                            title: 'Delete User',
+                            message: 'Are you sure you want to delete this user: <strong>' + fullName + '</strong>?',
                             callback: function(isDelete) {
                                 if(isDelete) {
                                     $.ajax({
                                         method: 'POST',
-                                        data: { id: userId, f_name: fname, l_name: lname },
+                                        data: { id: userId, table: 'users' },
                                         url: 'database/delete-function.php',
                                         dataType: 'json',
                                         success: function(data) {
-                                            if(data.success) {
-                                                BootstrapDialog.alert({
-                                                    type: BootstrapDialog.TYPE_SUCCESS,
-                                                    message: data.message,
-                                                    callback: function() {
-                                                        location.reload();
-                                                    }
-                                                });
-                                            } else {
-                                                BootstrapDialog.alert({
-                                                    type: BootstrapDialog.TYPE_DANGER,
-                                                    message: data.message,
-                                                });
-                                            }
+                                            const message = data.success ? fullName + ' has been deleted from the database!' : 'Error processing request!';
+
+                                            BootstrapDialog.alert({
+                                                type: data.success ? BootstrapDialog.TYPE_SUCCESS : BootstrapDialog.TYPE_DANGER,
+                                                message: message,
+                                                callback: function() {
+                                                    if (data.success) location.reload();
+                                                }
+                                            });
                                         }
                                     });
                                 } else { alert('Not deleting'); }

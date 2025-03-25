@@ -1,11 +1,11 @@
 <?php
     $data = $_POST;
-    $user_id = (int) $data['id'];
-    $first_name = $data['f_name'];
-    $last_name = $data['l_name'];
     
+    $id = (int) $data['id'];
+    $table = $data['table'];
+
     try {
-        $delete_method = "DELETE FROM users WHERE id = {$user_id}";
+        $delete_method = "DELETE FROM $table WHERE id = {$id}";
         
         include('connector.php');
 
@@ -13,12 +13,11 @@
 
         echo json_encode([
             'success' => true,
-            'message' => $first_name . ' ' . $last_name . ' has been deleted from the database!'
         ]);
+        
     } catch (PDOException $e) {
         echo json_encode([
             'success' => false,
-            'message' => 'Error processing request!'
         ]); 
     }
 ?>

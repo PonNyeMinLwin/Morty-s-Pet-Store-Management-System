@@ -1,12 +1,10 @@
 <?php
     // Starting the session
     session_start();
-
     if(!isset($_SESSION['user'])) header('location: index.php');
-    $_SESSION['table'] = 'users';
-    $user = $_SESSION['user'];
 
-    $usersList = include('database/show-database-function.php');
+    $_SESSION['table'] = 'products';
+    $products = include('database/show-function.php');
 ?>
 
 <html>
@@ -23,39 +21,45 @@
                     <div class="contentMainBody">
                         <div class="row">
                             <div class="column column-12">
-                                <h1 class="columnHeader"><i class="fa-solid fa-list"></i> List of Users</h1>
+                                <h1 class="columnHeader"><i class="fa-solid fa-list"></i> List of Products</h1>
                                 <div class="userListContainer">
                                     <div class="usersList">
                                         <table>
                                             <thead>
                                                 <tr>
                                                     <th>#</th>
-                                                    <th>First Name</th>
-                                                    <th>Last Name</th>
-                                                    <th>Email</th>
+                                                    <th>Image</th>
+                                                    <th>Product</th>
+                                                    <th>Type</th>
+                                                    <th>Info</th>
+                                                    <th>Price</th>
+                                                    <th>Created By</th>
                                                     <th>Created At</th>
                                                     <th>Updated At</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <?php foreach($usersList as $index => $user) { ?>
+                                                <?php foreach($products as $index => $product) { ?>
                                                     <tr>
                                                         <td><?= $index + 1 ?></td>
-                                                        <td class="firstName"><?= $user['first_name'] ?></td>
-                                                        <td class="lastName"><?= $user['last_name'] ?></td>
-                                                        <td class="email"><?= $user['email'] ?></td>
-                                                        <td><?= date('F d, Y @ h:i:s A', strtotime($user['created_at'])) ?></td>
-                                                        <td><?= date('F d, Y @ h:i:s A', strtotime($user['updated_at'])) ?></td>
+                                                        <td class="email"><img class="productImgs" src="inputs/product-images/<?= $product['img'] ?>" alt="" /></td>
+                                                        <td class="firstName"><?= $product['product_name'] ?></td>
+                                                        <td class="lastName"><?= $product['product_type'] ?></td>
+                                                        <td class="email"><?= $product['info'] ?></td>
+                                                        <td class="email"><?= $product['price'] ?></td>
+                                                        <td><?= $product['created_by'] ?></td>
+                                                        <td><?= date('F d, Y @ h:i:s A', strtotime($product['created_at'])) ?></td>
+                                                        <td><?= date('F d, Y @ h:i:s A', strtotime($product['updated_at'])) ?></td>
                                                         <td>
-                                                            <a href="" class="editUserIcon" data-userid="<?= $user['id'] ?>"><i class="fa-solid fa-pencil"></i> Edit</a>
-                                                            <a href="" class="deleteUserIcon" data-userid="<?= $user['id'] ?>" data-fname="<?= $user['first_name'] ?>" data-lname="<?= $user['last_name'] ?>"><i class="fa-solid fa-trash"></i> Delete</a>
+                                                            <a href="" class="editProductIcon" data-id="<?= $product['id'] ?>"><i class="fa-solid fa-pencil"></i> Edit</a>
+                                                            <a href="" class="deleteProductIcon" data-name="<?= $product['product_name'] ?>" data-id="<?= $product['id'] ?>"><i class="fa-solid fa-trash"></i> Delete</a>
                                                         </td>
                                                     </tr>
                                                 <?php } ?>
                                             </tbody>
                                         </table>
-                                        <p class="userCount"><?= count($usersList) ?> Users</p>
+                                        <p class="userCount"><?= count($products) ?> Products</p>
                                     </div>
                                 </div>
                             </div>
@@ -69,111 +73,47 @@
     
     <script>
         function script() {
-
             this.initialize = function() {
                 this.registerEvents();
             },
 
+            // Looking for a click function 
             this.registerEvents = function() {
                 document.addEventListener('click', function(e) {
                     targetElement = e.target;
 
-                    if(e.target.classList.contains('deleteUserIcon')) {
+                    if(targetElement.classList.contains('deleteProductIcon')) {
                         e.preventDefault();
-                        userId = targetElement.dataset.userid;
-                        fname = targetElement.dataset.fname;
-                        lname = targetElement.dataset.lname;
-                        fullName = fname + ' ' + lname;
+
+                        id = targetElement.dataset.id;
+                        name = targetElement.dataset.name;
 
                         BootstrapDialog.confirm({
                             type: BootstrapDialog.TYPE_DANGER,
-                            message: 'Are you sure you want to delete this user: ' + fullName + '?',
+                            title: 'Delete Product',
+                            message: 'Are you sure you want to delete this product: <strong>' + name + '</strong>?',
                             callback: function(isDelete) {
                                 if(isDelete) {
                                     $.ajax({
                                         method: 'POST',
-                                        data: { id: userId, f_name: fname, l_name: lname },
+                                        data: { id: id, table: 'products' },
                                         url: 'database/delete-function.php',
                                         dataType: 'json',
                                         success: function(data) {
-                                            if(data.success) {
-                                                BootstrapDialog.alert({
-                                                    type: BootstrapDialog.TYPE_SUCCESS,
-                                                    message: data.message,
-                                                    callback: function() {
-                                                        location.reload();
-                                                    }
-                                                });
-                                            } else {
-                                                BootstrapDialog.alert({
-                                                    type: BootstrapDialog.TYPE_DANGER,
-                                                    message: data.message,
-                                                });
-                                            }
+                                            const message = data.success
+                                                ? name + ' has been deleted from the database!' : 'Error processing request!';
+
+                                            BootstrapDialog.alert({
+                                                type: data.success ? BootstrapDialog.TYPE_SUCCESS : BootstrapDialog.TYPE_DANGER,
+                                                message: message,
+                                                callback: function() {
+                                                    if (data.success) location.reload();
+                                                }
+                                            });
                                         }
                                     });
                                 } else { alert('Not deleting'); }
                             }
-                        });
-                    }
-
-                    if(e.target.classList.contains('editUserIcon')) {
-                        e.preventDefault();
-
-                        // Getting data
-                        firstName = targetElement.closest('tr').querySelector('td.firstName').innerHTML;
-                        lastName = targetElement.closest('tr').querySelector('td.lastName').innerHTML;
-                        email = targetElement.closest('tr').querySelector('td.email').innerHTML;
-                        fullName = firstName + ' ' + lastName;
-                        userId = targetElement.dataset.userid;
-
-                        BootstrapDialog.confirm({
-                            title: 'Are you sure you want to update this user information: ' + fullName + '?',
-                            message: '<form>\
-                                        <div class="editUserForm">\
-                                            <label for="firstName">First Name:</label>\
-                                            <input type="text" class="editUserInput" id="firstName" value="'+ firstName +'">\
-                                        </div>\
-                                        <div class="editUserForm">\
-                                            <label for="lastName">Last Name:</label>\
-                                            <input type="text" class="editUserInput" id="lastName" value="'+ lastName +'">\
-                                        </div>\
-                                        <div class="editUserForm">\
-                                            <label for="email">Email Address:</label>\
-                                            <input type="email" class="editUserInput" id="emailUpdate" value="'+ email +'">\
-                                        </div>\
-                                    </form>',
-                                    callback: function(isUpdate) {
-                                        if(isUpdate) {
-                                            $.ajax({
-                                                method: 'POST',
-                                                data: {
-                                                    id: userId,
-                                                    f_name: document.getElementById('firstName').value,
-                                                    l_name: document.getElementById('lastName').value,
-                                                    email: document.getElementById('emailUpdate').value
-                                                },
-                                                url: 'database/update-function.php',
-                                                dataType: 'json',
-                                                success: function(data) {
-                                                    if(data.success) {
-                                                        BootstrapDialog.alert({
-                                                            type: BootstrapDialog.TYPE_SUCCESS,
-                                                            message: data.message,
-                                                            callback: function() {
-                                                                location.reload();
-                                                            }
-                                                        });
-                                                    } else {
-                                                        BootstrapDialog.alert({
-                                                            type: BootstrapDialog.TYPE_DANGER,
-                                                            message: data.message,
-                                                        });
-                                                    }
-                                                }
-                                            });
-                                        } else { alert('Not updating'); }
-                                    }
                         });
                     }
                 });
