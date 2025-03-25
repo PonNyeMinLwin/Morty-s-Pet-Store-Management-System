@@ -13,18 +13,18 @@
                 <li class="sideBarMainList">
                     <a href="javascript:void(0);" class="dropDownFunction">
                         <i class="fa-solid fa-paw dropDownFunction"></i>
-                        <span class="sideBarText dropDownFunction">Product Management</span>
+                        <span class="sideBarText dropDownFunction">Products</span>
                         <i class="fa-solid fa-angle-left leftIconArrow dropDownFunction"></i>
                     </a>
                     <ul class="dropDownMenus">
-                        <li><a href="#" class="functions"><i class="fa-regular fa-circle"></i>View Products</a></li>
-                        <li><a href="#" class="functions"><i class="fa-regular fa-circle"></i>Add Products</a></li>
+                        <li><a href="./view-products.php" class="functions"><i class="fa-regular fa-circle"></i>View Products</a></li>
+                        <li><a href="./add-products.php" class="functions"><i class="fa-regular fa-circle"></i>Add Products</a></li>
                     </ul>
                 </li>
                 <li class="sideBarMainList">
                     <a href="javascript:void(0);" class="dropDownFunction">
                         <i class="fa-solid fa-truck-fast dropDownFunction"></i>
-                        <span class="sideBarText dropDownFunction">Supplier Management</span>
+                        <span class="sideBarText dropDownFunction">Suppliers</span>
                         <i class="fa-solid fa-angle-left leftIconArrow dropDownFunction"></i>
                     </a>
                     <ul class="dropDownMenus">
@@ -35,12 +35,12 @@
                 <li class="sideBarMainList">
                     <a href="javascript:void(0);" class="dropDownFunction">
                         <i class="fa-solid fa-users dropDownFunction"></i>
-                        <span class="sideBarText dropDownFunction">User Management</span>
+                        <span class="sideBarText dropDownFunction">Users</span>
                         <i class="fa-solid fa-angle-left leftIconArrow dropDownFunction"></i>
                     </a>
                     <ul class="dropDownMenus">
-                        <li><a href="#" class="functions"><i class="fa-regular fa-circle"></i>View Users</a></li>
-                        <li><a href="#" class="functions"><i class="fa-regular fa-circle"></i>Add Users</a></li>
+                        <li><a href="./view-users.php" class="functions"><i class="fa-regular fa-circle"></i>View Users</a></li>
+                        <li><a href="./add-users.php" class="functions"><i class="fa-regular fa-circle"></i>Add Users</a></li>
                     </ul>
                 </li>
             </ul>

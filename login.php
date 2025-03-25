@@ -17,6 +17,8 @@
         if($stmt->rowCount() > 0){
             $stmt->setFetchMode(PDO::FETCH_ASSOC);
             $user = $stmt->fetchAll()[0];
+
+            // Captures data of the user currently logged in
             $_SESSION['user'] = $user;
 
             header('Location: dashboard.php');

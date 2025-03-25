@@ -6,7 +6,7 @@
     $email = $data['email'];
     
     try {
-        $sql = "UPDATE users SET email = ?, first_name = ?, last_name = ?, last_updated_at = ? WHERE id = ?";
+        $sql = "UPDATE users SET email = ?, first_name = ?, last_name = ?, updated_at = ? WHERE id = ?";
         
         include('connector.php');
         $conn -> prepare($sql) -> execute([$email, $first_name, $last_name, date('Y-m-d H:i:s'), $user_id]);
