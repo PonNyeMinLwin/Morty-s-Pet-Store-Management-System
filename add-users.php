@@ -7,7 +7,7 @@
     $_SESSION['redirect_to'] = 'add-users.php'; 
     $user = $_SESSION['user'];
 
-    $usersList = include('database/show-database-function.php');
+    $usersList = include('database/show-function.php');
 ?>
 
 <html>

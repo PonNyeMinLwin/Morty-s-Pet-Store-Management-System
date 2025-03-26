@@ -31,7 +31,7 @@
                                                     <th>Image</th>
                                                     <th>Product</th>
                                                     <th>Type</th>
-                                                    <th>Info</th>
+                                                    <th>Description</th>
                                                     <th>Price</th>
                                                     <th>Created By</th>
                                                     <th>Created At</th>
@@ -48,7 +48,17 @@
                                                         <td class="lastName"><?= $product['product_type'] ?></td>
                                                         <td class="email"><?= $product['info'] ?></td>
                                                         <td class="email"><?= $product['price'] ?></td>
-                                                        <td><?= $product['created_by'] ?></td>
+                                                        <td>
+                                                            <?php
+                                                                $id = $product['created_by'];
+                                                                $stmt = $conn->prepare("SELECT * FROM users WHERE id=$id");
+                                                                $stmt->execute();
+                                                                $row = $stmt->fetch(PDO::FETCH_ASSOC);
+                                                                
+                                                                $product_creator = $row['first_name'] . ' ' . $row['last_name'];
+                                                                echo $product_creator;
+                                                            ?>
+                                                        </td>
                                                         <td><?= date('F d, Y @ h:i:s A', strtotime($product['created_at'])) ?></td>
                                                         <td><?= date('F d, Y @ h:i:s A', strtotime($product['updated_at'])) ?></td>
                                                         <td>
@@ -73,12 +83,20 @@
     
     <script>
         function script() {
+            var t = this;
+
+            // Initialising events
             this.initialize = function() {
                 this.registerEvents();
             },
 
             // Looking for a click function 
             this.registerEvents = function() {
+                $(document).on('submit', '#editProductInfoForm', function(e) {
+                    e.preventDefault();
+                    script.saveProductUpdatedData(this);
+                });
+
                 document.addEventListener('click', function(e) {
                     targetElement = e.target;
 
@@ -116,7 +134,74 @@
                             }
                         });
                     }
+
+                    if(targetElement.classList.contains('editProductIcon')) {
+                        e.preventDefault();
+
+                        id = targetElement.dataset.id;
+                        
+                        t.toggleEditDialog(id);
+                    }
                 });
+            },
+
+            this.saveProductUpdatedData = function(form) {
+                $.ajax({
+                    method: 'POST',
+                    data: new FormData(form),
+                    url: 'database/update-products.php',
+                    processData: false,
+                    contentType: false,
+                    dataType: 'json',
+                    success: function(data) {
+                        BootstrapDialog.alert({
+                            type: data.success ? BootstrapDialog.TYPE_SUCCESS : BootstrapDialog.TYPE_DANGER,
+                            message: data.message,
+                            callback: function() { 
+                                if(data.success) location.reload(); 
+                            }
+                        });
+                    }
+                });
+            }
+
+            // Edit Products Dialog Toggle Function
+            this.toggleEditDialog = function(id) {
+                $.get('database/get-product-info.php', {id: id}, function(data) {
+                    BootstrapDialog.confirm({
+                        title: 'Are you sure you want to update this product entry: <strong>' + data.product_name + '</strong>?',
+                        message: '<form id="editProductInfoForm" action="#" method="POST" enctype="multipart/form-data">\
+                                        <div class="addUserFormInputBox">\
+                                            <label for="product_name">Product Name</label>\
+                                            <input type="text" class="addUserInput" id="product_name" value="'+ data.product_name +'" name="product_name" />\
+                                        </div>\
+                                        <div class="addUserFormInputBox">\
+                                            <label for="product_type">Product Type</label>\
+                                            <input type="text" class="addUserInput" id="product_type" value="'+ data.product_type +'" name="product_type" />\
+                                        </div>\
+                                        <div class="addUserFormInputBox">\
+                                            <label for="info">Description</label>\
+                                            <textarea class="addUserInput productInfoBoxInput" id="info" name="info"> '+ data.info +' </textarea>\
+                                        </div>\
+                                        <div class="addUserFormInputBox">\
+                                            <label for="product_name">Image</label>\
+                                            <input type="file" name="img" />\
+                                        </div>\
+                                        <div class="addUserFormInputBox">\
+                                            <label for="price">Price</label>\
+                                            <input type="text" class="addUserInput" id="price" value="'+ data.price +'" name="price" />\
+                                        </div>\
+                                        <input type="hidden" name="id" value="'+ data.id +'" />\
+                                        <input type="hidden" name="current_img" value="' + data.img + '" />\
+                                        <input type="submit" value="submit" id="editProductSubmitBtn" class="hidden"/>\
+                                    </form>',
+                        callback: function(isUpdate) {
+                            if(isUpdate) {
+                                document.getElementById('editProductSubmitBtn').click();
+                            } else alert('Not updating');
+                        }
+                    });
+                }, 'json');
             }
         }
         var script = new script;

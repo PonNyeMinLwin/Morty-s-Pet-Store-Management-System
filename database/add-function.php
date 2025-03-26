@@ -38,7 +38,6 @@
             } else {
                 $value = '';
             }
-            // Saving the path to the database
         }
         else $value = isset($_POST[$column]) ? $_POST[$column] : ''; 
 
