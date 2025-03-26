@@ -32,8 +32,8 @@
                         <i class="fa-solid fa-angle-left leftIconArrow dropDownFunction"></i>
                     </a>
                     <ul class="dropDownMenus">
-                        <li><a href="#" class="functions"><i class="fa-regular fa-circle"></i>View Suppliers</a></li>
-                        <li><a href="#" class="functions"><i class="fa-regular fa-circle"></i>Add Suppliers</a></li>
+                        <li><a href="./view-suppliers.php" class="functions"><i class="fa-regular fa-circle"></i>View Suppliers</a></li>
+                        <li><a href="./add-suppliers.php" class="functions"><i class="fa-regular fa-circle"></i>Add Suppliers</a></li>
                     </ul>
                 </li>
                 <li class="sideBarMainList">
