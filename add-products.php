@@ -5,7 +5,7 @@
 
     $_SESSION['table'] = 'products';
     $_SESSION['redirect_to'] = 'add-products.php'; 
-    $user = $_SESSION['user'];
+    $user = $_SESSION['user']; 
 ?>
 
 <html>
@@ -32,6 +32,19 @@
                                         <div class="addUserFormInputBox">
                                             <label for="product_type">Product Type</label>
                                             <input type="text" class="addUserInput" placeholder="Eg. food, cages, toys" id="product_type" name="product_type" />
+                                        </div>
+                                        <div class="addUserFormInputBox">
+                                            <label for="choiceBox">Suppliers</label>
+                                            <select name="suppliers[]" id="suppliersSelectionBox" multiple="">
+                                                <?php
+                                                    $target_table = 'suppliers';
+                                                    $suppliers = include('database/show-function.php');
+
+                                                    foreach($suppliers as $supplier) {
+                                                        echo "<option value='". $supplier['id'] ."'>". $supplier['supplier_name'] ."</option>";
+                                                    }
+                                                ?>
+                                            </select>
                                         </div>
                                         <div class="addUserFormInputBox">
                                             <label for="info">Description</label>

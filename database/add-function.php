@@ -3,7 +3,7 @@
     session_start();
 
     // Capturing the columns from the database 
-    include('database_columns.php');
+    include('database-columns.php');
 
     // Capturing the table name from the session
     $table_name = $_SESSION['table'];
@@ -20,23 +20,22 @@
         else if ($column == 'img') {
             // Uploading and moving image to directory
             $dir = "../inputs/product-images/";
-
             $file_data = $_FILES[$column];
-            $file_name = $file_data['name'];
-            $file_ext = pathinfo($file_name, PATHINFO_EXTENSION);
-            $file_name = 'product-img-' . time() . '.' . $file_ext;
-            $check = getimagesize($file_data['tmp_name']);
+            
+            $value = null;
+            $file_data = $_FILES['img'];
 
-            // Checking the uploaded image and moving to directory
-            if($check) {
-                if(move_uploaded_file($file_data['tmp_name'], $dir . $file_name)) {
-                    // Saving the file name to the database
-                    $value = $file_name;
-                } else {
-                    $value = '';
+            if($file_data['tmp_name'] !== '') {
+                $file_name = $file_data['name'];
+                $file_ext = pathinfo($file_name, PATHINFO_EXTENSION);
+                $file_name = 'product-img-' . time() . '.' . $file_ext;
+        
+                $check = getimagesize($file_data['tmp_name']);
+        
+                // Checking the uploaded image and moving to directory
+                if ($check && move_uploaded_file($file_data['tmp_name'], $dir . $file_name)) {
+                    $value = $file_name; // Replace with new image name
                 }
-            } else {
-                $value = '';
             }
         }
         else $value = isset($_POST[$column]) ? $_POST[$column] : ''; 
@@ -47,13 +46,6 @@
     $table_columns = implode(", ", array_keys($user_input_array));
     $table_values = ':' . implode(", :", array_keys($user_input_array));
 
-    // Assigning values to the 'Users' table
-    //$first_name = $_POST['first_name'];
-    //$last_name = $_POST['last_name'];
-    //$email = $_POST['email'];
-    //$password = $_POST['password'];
-    //$encrypted = password_hash($password, PASSWORD_DEFAULT);
-
     // Adding the values to the database
     try {
         $insert_method = "INSERT INTO $table_name($table_columns) VALUES ($table_values)";
@@ -62,6 +54,23 @@
 
         $stmt = $conn->prepare($insert_method);
         $stmt->execute($user_input_array);
+
+        // Adding suppliers to the products table
+        if($table_name === 'products') {
+            $product_id = $conn->lastInsertId();
+
+            $suppliers = isset($_POST['suppliers']) ? $_POST['suppliers'] : [];
+            if($suppliers) {
+                // Looping through the suppliers and adding to the database
+                foreach($suppliers as $supplier) {
+                    $supplier_data = ['supplier_id' => $supplier, 'product_id' => $product_id, 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')];
+                    $insert_supplier_method = "INSERT INTO product_suppliers(supplier_id, product_id, created_at, updated_at) VALUES (:supplier_id, :product_id, :created_at, :updated_at)";
+                    
+                    $stmt = $conn->prepare($insert_supplier_method);
+                    $stmt->execute($supplier_data);
+                }
+            }
+        }
 
         $response = [
             'success' => true,

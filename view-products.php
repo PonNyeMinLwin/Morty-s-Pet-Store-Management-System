@@ -3,7 +3,7 @@
     session_start();
     if(!isset($_SESSION['user'])) header('location: index.php');
 
-    $_SESSION['table'] = 'products';
+    $target_table = 'products';
     $products = include('database/show-function.php');
 ?>
 
@@ -30,13 +30,14 @@
                                                     <th>#</th>
                                                     <th>Image</th>
                                                     <th>Product</th>
-                                                    <th>Type</th>
-                                                    <th>Description</th>
-                                                    <th>Price</th>
+                                                    <th width="5%">Type</th>
+                                                    <th width="20%">Description</th>
+                                                    <th width="5%">Price</th>
+                                                    <th width="15%">Suppliers</th>
                                                     <th>Created By</th>
                                                     <th>Created At</th>
                                                     <th>Updated At</th>
-                                                    <th>Action</th>
+                                                    <th width="10%">Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -48,6 +49,24 @@
                                                         <td class="lastName"><?= $product['product_type'] ?></td>
                                                         <td class="email"><?= $product['info'] ?></td>
                                                         <td class="email"><?= $product['price'] ?></td>
+                                                        <td class="email">
+                                                            <?php
+                                                                $supplier_list = '';
+
+                                                                $p_id = $product['id'];
+                                                                $stmt = $conn->prepare("SELECT supplier_name FROM suppliers, product_suppliers WHERE product_suppliers.product_id=$p_id AND product_suppliers.supplier_id = suppliers.id");
+                                                                
+                                                                $stmt->execute();
+                                                                $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                                                                if($row) {
+                                                                    $supplier_arr_list = array_column($row, 'supplier_name');
+                                                                    $supplier_list = '<li>' . implode("</li><li>", $supplier_arr_list);
+                                                                }
+
+                                                                echo $supplier_list;
+                                                            ?>
+                                                        </td>
                                                         <td>
                                                             <?php
                                                                 $id = $product['created_by'];
@@ -79,9 +98,24 @@
             </div>
         </div>
 
-        <?php include('prefabs/script-footer-links.php') ?>
+        <?php 
+            include('prefabs/script-footer-links.php'); 
+
+            $target_table = 'suppliers';
+            $suppliers = include('database/show-function.php');
+
+            $supplier_arr = [];
+
+            foreach($suppliers as $supplier) {
+                $supplier_arr[$supplier['id']] = $supplier['supplier_name'];
+            }
+
+            $supplier_arr = json_encode($supplier_arr);
+        ?>
     
     <script>
+        var suppliers = <?= $supplier_arr ?>;
+
         function script() {
             var t = this;
 
@@ -168,6 +202,14 @@
             // Edit Products Dialog Toggle Function
             this.toggleEditDialog = function(id) {
                 $.get('database/get-product-info.php', {id: id}, function(data) {
+                    let current_suppliers = data['suppliers_list'];
+                    let supplierOptions = '';
+
+                    for(const [supplierId, supplierName] of Object.entries(suppliers)) {
+                        selected = current_suppliers.indexOf(supplierId) > -1 ? 'selected' : '';
+                        supplierOptions += "<option "+ selected +" value='"+ supplierId +"'>"+ supplierName +"</option>";
+                    }
+
                     BootstrapDialog.confirm({
                         title: 'Are you sure you want to update this product entry: <strong>' + data.product_name + '</strong>?',
                         message: '<form id="editProductInfoForm" action="#" method="POST" enctype="multipart/form-data">\
@@ -190,6 +232,12 @@
                                         <div class="addUserFormInputBox">\
                                             <label for="price">Price</label>\
                                             <input type="text" class="addUserInput" id="price" value="'+ data.price +'" name="price" />\
+                                        </div>\
+                                        <div class="addUserFormInputBox">\
+                                            <label for="choiceBox">Suppliers</label>\
+                                            <select name="suppliers[]" id="suppliersSelectionBox" multiple="">\
+                                                '+ supplierOptions +'\
+                                            </select>\
                                         </div>\
                                         <input type="hidden" name="id" value="'+ data.id +'" />\
                                         <input type="hidden" name="current_img" value="' + data.img + '" />\

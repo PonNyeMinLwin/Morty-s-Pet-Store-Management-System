@@ -5,8 +5,8 @@
 
     $_SESSION['table'] = 'users';
     $_SESSION['redirect_to'] = 'add-users.php'; 
-    $user = $_SESSION['user'];
 
+    $target_table = 'users';
     $usersList = include('database/show-function.php');
 ?>
 

@@ -31,10 +31,25 @@
     try {
         // Saving the new information and updating the 'View Products' table
         $update_method = "UPDATE products SET product_name=?, product_type=?, img=?, info=?, price=? WHERE id=?";
-        
-    
         $stmt = $conn->prepare($update_method);
         $stmt->execute([$product_name, $product_type, $tmp_file_name, $info, $price, $id]);
+
+        // Deleting the old values from the product_suppliers table
+        $delete_method = "DELETE FROM product_suppliers WHERE product_id=?";
+        $stmt = $conn->prepare($delete_method);
+        $stmt->execute([$id]);
+
+        // Getting suppliers
+        $suppliers = isset($_POST['suppliers']) ? $_POST['suppliers'] : [];
+        foreach($suppliers as $supplier) {
+            if (empty($supplier)) continue;
+
+            $supplier_data = ['supplier_id' => $supplier, 'product_id' => $id, 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')];
+            $insert_supplier_method = "INSERT INTO product_suppliers (supplier_id, product_id, created_at, updated_at) VALUES (:supplier_id, :product_id, :created_at, :updated_at)";
+            
+            $stmt = $conn->prepare($insert_supplier_method);
+            $stmt->execute($supplier_data);
+        }
 
         $response = [
             'success' => true,
@@ -43,7 +58,7 @@
     } catch (Exception $e) {
         $response = [
             'success' => false,
-            'message' => "Error processing request!"
+            'message' => "Error: " . $e->getMessage()
         ];
     }
 
