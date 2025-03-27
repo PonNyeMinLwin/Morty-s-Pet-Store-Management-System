@@ -24,7 +24,7 @@
                     <div class="contentMainBody">
                         <div class="row">
                             <div class="column column-12">
-                                <h1 class="columnHeader"><i class="fa-solid fa-plus"></i> Add User Information</h1> 
+                                <h1 class="columnHeader"><i class="fa-solid fa-user-plus"></i> Add User Information</h1> 
                                 <div id="addUserFormContainer">
                                     <form action="database/add-function.php" method="POST" class="addUserForm">
                                         <div class="addUserFormInputBox">

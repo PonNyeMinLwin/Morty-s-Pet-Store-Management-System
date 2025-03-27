@@ -22,7 +22,7 @@
                     <div class="contentMainBody">
                         <div class="row">
                             <div class="column column-12">
-                                <h1 class="columnHeader"><i class="fa-solid fa-plus"></i> Create Products</h1> 
+                                <h1 class="columnHeader"><i class="fa-solid fa-plus"></i> Create Product Entries</h1> 
                                 <div id="addUserFormContainer">
                                     <form action="database/add-function.php" method="POST" class="addUserForm" enctype="multipart/form-data">
                                         <div class="addUserFormInputBox">

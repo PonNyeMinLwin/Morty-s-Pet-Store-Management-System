@@ -610,5 +610,65 @@ i.leftIconArrow{
 
 /* Supplier Management Pages Styling */
 
+/* Stock Order Page Styling */
+.orderBtn{
+    height: 30px;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 50px;
+    color: #fff;
+    font-size: 15px;
+}
+
+.addStockOrderBtn{
+    background: #7e9ccc;
+    color: #fff;
+}
+
+.submitStockOrderBtn{
+    background: #cc7e7e;
+    color: #fff;
+    font-weight: bold;
+}
+
+.rightButtons{
+    text-align: right;
+}
+
+#orderStockLists{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+#orderStockLists .row{
+    margin: 0px !important;
+}
+
+.productOrderRow{
+    padding: 6px;
+    border: 2px solid #d2d2d2;
+    padding-bottom: 25px;
+}
+
+.productNameSelectionBox{
+    background: #fafafa;
+    border: none;
+    border: 1px solid #b0b0b0;
+    border-radius: 2px;
+    padding: 3px 1px;
+    font-size: 14px;
+}
+
+.supplierQuantityRows .supplierName{
+    font-size: 15px;
+    font-weight: bold;
+    color: black;
+    text-transform: uppercase;
+}
+
+.supplierQuantityRows .row{
+    text-align: center;
+    padding: 15px 0px 0px 0px;
+}
 
 

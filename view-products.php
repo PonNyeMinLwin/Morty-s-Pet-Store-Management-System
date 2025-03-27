@@ -3,6 +3,7 @@
     session_start();
     if(!isset($_SESSION['user'])) header('location: index.php');
 
+    // Getting all products from the database
     $target_table = 'products';
     $products = include('database/show-function.php');
 ?>
