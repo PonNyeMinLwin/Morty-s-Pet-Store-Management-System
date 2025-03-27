@@ -35,7 +35,7 @@
                                         </div>
                                         <div class="addUserFormInputBox">
                                             <label for="choiceBox">Suppliers</label>
-                                            <select name="suppliers[]" id="suppliersSelectionBox" multiple="">
+                                            <select name="suppliers[]" id="selectionBox" multiple="">
                                                 <?php
                                                     $target_table = 'suppliers';
                                                     $suppliers = include('database/show-function.php');

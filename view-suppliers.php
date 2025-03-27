@@ -77,8 +77,8 @@
                                                         <td><?= date('F d, Y @ h:i:s A', strtotime($supplier['created_at'])) ?></td>
                                                         <td><?= date('F d, Y @ h:i:s A', strtotime($supplier['updated_at'])) ?></td>
                                                         <td>
-                                                            <a href="" class="editProductIcon" data-id="<?= $supplier['id'] ?>"><i class="fa-solid fa-pencil"></i> Edit</a>
-                                                            <a href="" class="deleteProductIcon" data-name="<?= $supplier['supplier_name'] ?>" data-id="<?= $supplier['id'] ?>"><i class="fa-solid fa-trash"></i> Delete</a>
+                                                            <a href="" class="editSupplierIcon" data-id="<?= $supplier['id'] ?>"><i class="fa-solid fa-pencil"></i> Edit</a>
+                                                            <a href="" class="deleteSupplierIcon" data-name="<?= $supplier['supplier_name'] ?>" data-id="<?= $supplier['id'] ?>"><i class="fa-solid fa-trash"></i> Delete</a>
                                                         </td>
                                                     </tr>
                                                 <?php } ?>
@@ -97,20 +97,20 @@
         <?php 
             include('prefabs/script-footer-links.php'); 
 
-            $target_table = 'suppliers';
-            $suppliers = include('database/show-function.php');
+            $target_table = 'products';
+            $products = include('database/show-function.php');
 
-            $supplier_arr = [];
+            $product_arr = [];
 
-            foreach($suppliers as $supplier) {
-                $supplier_arr[$supplier['id']] = $supplier['supplier_name'];
+            foreach($products as $product) {
+                $product_arr[$product['id']] = $product['product_name'];
             }
 
-            $supplier_arr = json_encode($supplier_arr);
+            $product_arr = json_encode($product_arr);
         ?>
     
     <script>
-        var suppliers = <?= $supplier_arr ?>;
+        var products = <?= $product_arr ?>;
 
         function script() {
             var t = this;
@@ -122,34 +122,34 @@
 
             // Looking for a click function 
             this.registerEvents = function() {
-                $(document).on('submit', '#editProductInfoForm', function(e) {
+                $(document).on('submit', '#editSupplierInfoForm', function(e) {
                     e.preventDefault();
-                    script.saveProductUpdatedData(this);
+                    script.saveSupplierUpdatedData(this);
                 });
 
                 document.addEventListener('click', function(e) {
                     targetElement = e.target;
 
-                    if(targetElement.classList.contains('deleteProductIcon')) {
+                    if(targetElement.classList.contains('deleteSupplierIcon')) {
                         e.preventDefault();
 
-                        id = targetElement.dataset.id;
-                        name = targetElement.dataset.name;
+                        sId = targetElement.dataset.id;
+                        supplierName = targetElement.dataset.name;
 
                         BootstrapDialog.confirm({
                             type: BootstrapDialog.TYPE_DANGER,
-                            title: 'Delete Product',
-                            message: 'Are you sure you want to delete this product: <strong>' + name + '</strong>?',
+                            title: 'Delete Supplier',
+                            message: 'Are you sure you want to delete this supplier: <strong>' + supplierName + '</strong>?',
                             callback: function(isDelete) {
                                 if(isDelete) {
                                     $.ajax({
                                         method: 'POST',
-                                        data: { id: id, table: 'products' },
+                                        data: { id: sId, table: 'suppliers' },
                                         url: 'database/delete-function.php',
                                         dataType: 'json',
                                         success: function(data) {
-                                            const message = data.success
-                                                ? name + ' has been deleted from the database!' : 'Error processing request!';
+                                            const message = data.success ? 
+                                                supplierName + ' has been deleted from the database!' : 'Error processing request!';
 
                                             BootstrapDialog.alert({
                                                 type: data.success ? BootstrapDialog.TYPE_SUCCESS : BootstrapDialog.TYPE_DANGER,
@@ -165,23 +165,27 @@
                         });
                     }
 
-                    if(targetElement.classList.contains('editProductIcon')) {
+                    if(targetElement.classList.contains('editSupplierIcon')) {
                         e.preventDefault();
 
                         id = targetElement.dataset.id;
-                        
                         t.toggleEditDialog(id);
                     }
                 });
             },
 
-            this.saveProductUpdatedData = function(form) {
+            this.saveSupplierUpdatedData = function(form) {
                 $.ajax({
                     method: 'POST',
-                    data: new FormData(form),
-                    url: 'database/update-products.php',
-                    processData: false,
-                    contentType: false,
+                    data: {
+                        supplier_name: document.getElementById('supplier_name').value,
+                        supplier_location: document.getElementById('supplier_location').value,
+                        email: document.getElementById('email').value,
+                        products: $('#selectionBox').val(),
+                        id: document.getElementById('id').value,
+
+                    },
+                    url: 'database/update-suppliers.php',
                     dataType: 'json',
                     success: function(data) {
                         BootstrapDialog.alert({
@@ -197,51 +201,42 @@
 
             // Edit Products Dialog Toggle Function
             this.toggleEditDialog = function(id) {
-                $.get('database/get-product-info.php', {id: id}, function(data) {
-                    let current_suppliers = data['suppliers_list'];
-                    let supplierOptions = '';
+                $.get('database/get-supplier-info.php', {id: id}, function(data) {
+                    let currentProducts = data['products_list'];
+                    let productOptions = '';
 
-                    for(const [supplierId, supplierName] of Object.entries(suppliers)) {
-                        selected = current_suppliers.indexOf(supplierId) > -1 ? 'selected' : '';
-                        supplierOptions += "<option "+ selected +" value='"+ supplierId +"'>"+ supplierName +"</option>";
+                    for(const [productId, productName] of Object.entries(products)) {
+                        selected = currentProducts.indexOf(productId) > -1 ? 'selected' : '';
+                        productOptions += "<option "+ selected +" value='"+ productId +"'>"+ productName +"</option>";
                     }
 
                     BootstrapDialog.confirm({
-                        title: 'Are you sure you want to update this product entry: <strong>' + data.product_name + '</strong>?',
-                        message: '<form id="editProductInfoForm" action="#" method="POST" enctype="multipart/form-data">\
+                        title: 'Are you sure you want to update this supplier information: <strong>' + data.supplier_name + '</strong>?',
+                        message: '<form id="editSupplierInfoForm" action="#" method="POST" enctype="multipart/form-data">\
                                         <div class="addUserFormInputBox">\
-                                            <label for="product_name">Product Name</label>\
-                                            <input type="text" class="addUserInput" id="product_name" value="'+ data.product_name +'" name="product_name" />\
+                                            <label for="supplier_name">Supplier Name</label>\
+                                            <input type="text" class="addUserInput" id="supplier_name" value="'+ data.supplier_name +'" name="supplier_name" />\
                                         </div>\
                                         <div class="addUserFormInputBox">\
-                                            <label for="product_type">Product Type</label>\
-                                            <input type="text" class="addUserInput" id="product_type" value="'+ data.product_type +'" name="product_type" />\
+                                            <label for="supplier_location">Supplier Location</label>\
+                                            <input type="text" class="addUserInput" id="supplier_location" value="'+ data.supplier_location +'" name="supplier_location" />\
                                         </div>\
                                         <div class="addUserFormInputBox">\
-                                            <label for="info">Description</label>\
-                                            <textarea class="addUserInput productInfoBoxInput" id="info" name="info"> '+ data.info +' </textarea>\
+                                            <label for="email">Email</label>\
+                                            <input type="email" class="addUserInput" id="email" value="'+ data.email +'" name="email" />\
                                         </div>\
                                         <div class="addUserFormInputBox">\
-                                            <label for="product_name">Image</label>\
-                                            <input type="file" name="img" />\
-                                        </div>\
-                                        <div class="addUserFormInputBox">\
-                                            <label for="price">Price</label>\
-                                            <input type="text" class="addUserInput" id="price" value="'+ data.price +'" name="price" />\
-                                        </div>\
-                                        <div class="addUserFormInputBox">\
-                                            <label for="choiceBox">Suppliers</label>\
-                                            <select name="suppliers[]" id="suppliersSelectionBox" multiple="">\
-                                                '+ supplierOptions +'\
+                                            <label for="choiceBox">Supplied Products</label>\
+                                            <select name="products[]" id="selectionBox" multiple="">\
+                                                '+ productOptions +'\
                                             </select>\
                                         </div>\
-                                        <input type="hidden" name="id" value="'+ data.id +'" />\
-                                        <input type="hidden" name="current_img" value="' + data.img + '" />\
-                                        <input type="submit" value="submit" id="editProductSubmitBtn" class="hidden"/>\
+                                        <input type="hidden" name="id" id="id" value="'+ data.id +'" />\
+                                        <input type="submit" value="submit" id="editSupplierSubmitBtn" class="hidden"/>\
                                     </form>',
                         callback: function(isUpdate) {
                             if(isUpdate) {
-                                document.getElementById('editProductSubmitBtn').click();
+                                document.getElementById('editSupplierSubmitBtn').click();
                             } else alert('Not updating');
                         }
                     });
