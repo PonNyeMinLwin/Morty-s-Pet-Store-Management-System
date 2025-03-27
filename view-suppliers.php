@@ -78,7 +78,7 @@
                                                         <td><?= date('F d, Y @ h:i:s A', strtotime($supplier['updated_at'])) ?></td>
                                                         <td>
                                                             <a href="" class="editSupplierIcon" data-id="<?= $supplier['id'] ?>"><i class="fa-solid fa-pencil"></i> Edit</a>
-                                                            <a href="" class="deleteSupplierIcon" data-name="<?= $supplier['supplier_name'] ?>" data-id="<?= $supplier['id'] ?>"><i class="fa-solid fa-trash"></i> Delete</a>
+                                                            <a href="" class="deleteSupplierIcon" data-name="<?= $supplier['supplier_name'] ?>" data-id="<?= $supplier['id'] ?>"><i class="fa-solid fa-trash-can"></i> Delete</a>
                                                         </td>
                                                     </tr>
                                                 <?php } ?>

@@ -50,7 +50,7 @@
                                                         <td><?= date('F d, Y @ h:i:s A', strtotime($user['updated_at'])) ?></td>
                                                         <td>
                                                             <a href="" class="editUserIcon" data-userid="<?= $user['id'] ?>"><i class="fa-solid fa-pencil"></i> Edit</a>
-                                                            <a href="" class="deleteUserIcon" data-userid="<?= $user['id'] ?>" data-fname="<?= $user['first_name'] ?>" data-lname="<?= $user['last_name'] ?>"><i class="fa-solid fa-trash"></i> Delete</a>
+                                                            <a href="" class="deleteUserIcon" data-userid="<?= $user['id'] ?>" data-fname="<?= $user['first_name'] ?>" data-lname="<?= $user['last_name'] ?>"><i class="fa-solid fa-trash-can"></i> Delete</a>
                                                         </td>
                                                     </tr>
                                                 <?php } ?>

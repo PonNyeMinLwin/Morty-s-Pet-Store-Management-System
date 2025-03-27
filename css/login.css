@@ -621,11 +621,13 @@ i.leftIconArrow{
 }
 
 .addStockOrderBtn{
+    margin-bottom: 20px;
     background: #7e9ccc;
     color: #fff;
 }
 
 .submitStockOrderBtn{
+    margin-top: 10px;
     background: #cc7e7e;
     color: #fff;
     font-weight: bold;
@@ -648,27 +650,51 @@ i.leftIconArrow{
     padding: 6px;
     border: 2px solid #d2d2d2;
     padding-bottom: 25px;
+    padding-top: 25px;
+    margin-bottom: 20px;
 }
 
 .productNameSelectionBox{
+    text-align: center;
     background: #fafafa;
     border: none;
     border: 1px solid #b0b0b0;
     border-radius: 2px;
-    padding: 3px 1px;
+    padding: 3px 0px;
     font-size: 14px;
 }
 
 .supplierQuantityRows .supplierName{
+    padding-top: 4px;
     font-size: 15px;
     font-weight: bold;
-    color: black;
-    text-transform: uppercase;
+    color: #cc7e7e;
 }
 
 .supplierQuantityRows .row{
     text-align: center;
-    padding: 15px 0px 0px 0px;
+    margin: 10px 0px 5px 10px;
+}
+
+.orderQtyCount{
+    text-align: center;
+    text-indent: 15px;
+    height: 25px;
+    max-width: 25%;
+    border: none;
+    background: #f8f8f8;
+    border: 1px solid #b0b0b0;
+    border-radius: 5px;
+}
+
+.removeOrderBtn{
+    margin: 0px 5px 0px 0px;
+    float: right;
+    background: #cc7e7e;
+    border: none;
+    padding: 5px 5px;
+    color: #fff;
+    border-radius: 5px;
 }
 
 

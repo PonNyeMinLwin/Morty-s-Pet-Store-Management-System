@@ -83,7 +83,7 @@
                                                         <td><?= date('F d, Y @ h:i:s A', strtotime($product['updated_at'])) ?></td>
                                                         <td>
                                                             <a href="" class="editProductIcon" data-id="<?= $product['id'] ?>"><i class="fa-solid fa-pencil"></i> Edit</a>
-                                                            <a href="" class="deleteProductIcon" data-name="<?= $product['product_name'] ?>" data-id="<?= $product['id'] ?>"><i class="fa-solid fa-trash"></i> Delete</a>
+                                                            <a href="" class="deleteProductIcon" data-name="<?= $product['product_name'] ?>" data-id="<?= $product['id'] ?>"><i class="fa-solid fa-trash-can"></i> Delete</a>
                                                         </td>
                                                     </tr>
                                                 <?php } ?>
@@ -253,6 +253,7 @@
                 }, 'json');
             }
         }
+        
         var script = new script;
         script.initialize();
     </script>  

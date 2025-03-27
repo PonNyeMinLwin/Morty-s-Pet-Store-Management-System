@@ -22,64 +22,147 @@
                     <div class="contentMainBody">
                         <div class="row">
                             <div class="column column-12">
-                                <h1 class="columnHeader"><i class="fa-solid fa-tags"></i> Order Product Stocks</h1> 
+                                <h1 class="columnHeader"><i class="fa-solid fa-tags"></i> Product Order</h1> 
                                 <div>
-                                    <div class="rightButtons">
-                                        <button class="orderBtn addStockOrderBtn" id="addStockOrderBtn"><i class="fa-solid fa-file-circle-plus"></i> Add New Stock Order</button>
-                                    </div>
-                                    <div id="orderStockLists">
-                                        <div class="productOrderRow">
-                                            <div>
-                                                <label for="product_name">Product Name</label>
-                                                <select class="productNameSelectionBox" name="product_name" id="product_name">
-                                                    <option value="">Select Product...</option>
-                                                </select>
-                                            </div>
-
-                                            <div class="supplierQuantityRows">
-                                                <div class="row">
-                                                    <div style="width: 20%;">
-                                                        <p class="supplierName">Supplier 1</p>
-                                                    </div>
-                                                    <div style="width: 80%;">
-                                                        <label for="orderCount">Order Quantity:</label>
-                                                        <input type="number" class="addUserInput" placeholder="0" id="orderCount" name="orderCount" />
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div style="width: 20%;">
-                                                        <p class="supplierName">Supplier 2</p>
-                                                    </div>
-                                                    <div style="width: 80%;">
-                                                        <label for="orderCount">Order Quantity:</label>
-                                                        <input type="number" class="addUserInput" placeholder="0" id="orderCount" name="orderCount" />
-                                                    </div>
-                                                </div>
-                                                <div class="row">
-                                                    <div style="width: 20%;">
-                                                        <p class="supplierName">Supplier 3</p>
-                                                    </div>
-                                                    <div style="width: 80%;">
-                                                        <label for="orderCount">Order Quantity:</label>
-                                                        <input type="number" class="addUserInput" placeholder="0" id="orderCount" name="orderCount" />
-                                                    </div>
-                                                </div>
-                                            </div>
+                                    <form action="database/save-function.php" method="POST">
+                                        <div class="rightButtons">
+                                            <button type="button" class="orderBtn addStockOrderBtn" id="addStockOrderBtn">
+                                                <i class="fa-solid fa-file-circle-plus"></i> 
+                                                Add New Product Order
+                                            </button>
                                         </div>
-                                    </div>
-                                    <div class="rightButtons">
-                                        <button class="orderBtn submitStockOrderBtn"><i class="fa-solid fa-cart-plus"></i> Submit Order</button>
-                                    </div>
+
+                                        <div id="newStockOrder">
+                                            <h3 id="noProductData" style="color: #cc7e7e; text-align: center; font-weight: bold;">
+                                                No Current Product Orders!
+                                            </h3>
+                                        </div>
+
+                                        <div class="rightButtons">
+                                            <button type="submit" class="orderBtn submitStockOrderBtn">
+                                                <i class="fa-solid fa-cart-plus"></i> 
+                                                Submit Order
+                                            </button>
+                                        </div>
+                                    </form>
                                 </div>
+                                <?php 
+                                    if(isset($_SESSION['response'])) {
+                                        $response_message = $_SESSION['response']['message'];
+                                        $is_success = $_SESSION['response']['success'];
+                                ?>
+                                    <div class="responseMessage">
+                                        <p class="<?= $is_success ? 'responseMessage_success' : 'responseMessage_error' ?>">
+                                            <?= $response_message ?>
+                                        </p>
+                                    </div>
+                                <?php unset($_SESSION['response']); } ?>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
         <?php include('prefabs/script-footer-links.php'); ?>
-        <script>
-            var products = <?= $products ?>;
-        </script>
+
+    <script>
+        var products = <?= $products ?>;
+        var count = 0;
+        
+        function script() {
+            var t = this;
+
+            let productSelections = '\
+                <div>\
+                    <label for="product_name">Product Name</label>\
+                    <select class="productNameSelectionBox" name="products[]" id="product_name">\
+                        <option value="">Select Product</option>\
+                        INSERTPRODUCTHERE\
+                    </select>\
+                    <button class="removeOrderBtn"><i class="fa-solid fa-trash-can"></i> Delete Order</button>\
+                </div>';
+                
+            this.initialize = function() {
+                this.registerEvents();
+                this.populateProductSelections();
+            },
+
+            this.populateProductSelections = function() {
+                let productList = '';
+
+                products.forEach((product) => {
+                    productList += '<option value="' + product.id + '">' + product.product_name + '</option>';
+                });
+                
+                productSelections = productSelections.replace('INSERTPRODUCTHERE', productList);
+            },
+            
+            this.registerEvents = function() {
+                document.addEventListener('click', function(e) {
+                    targetElement = e.target;
+
+                    // Adding a new stock order when 'add-product-order' button is clicked
+                    if(targetElement.id === 'addStockOrderBtn') {
+                        document.getElementById('noProductData').style.display = 'none';
+
+                        let newStockOrderContainer = document.getElementById('newStockOrder');
+                        newStockOrder.innerHTML += '\
+                            <div class="productOrderRow">\
+                                '+ productSelections +'\
+                                <div class="supplierQuantityRows" id="sQRows-'+ count + '"data-counter="'+ count +'"></div>\
+                            </div>';
+                        
+                        count++;
+                    }
+
+                    // Deleting a stock order when detele button is clicked
+                    if(targetElement.classList.contains('removeOrderBtn')) {
+                        targetElement.closest('div.productOrderRow').remove();
+                    }
+
+                });
+
+                document.addEventListener('change', function(e) {
+                    targetElement = e.target;
+
+                    // Updating the suppliers selections when a product is chosen
+                    if(targetElement.classList.contains('productNameSelectionBox')) {
+                        let id = targetElement.value;
+
+                        if(!id.length) return;
+
+                        let sQRowId = targetElement.closest('div.productOrderRow').querySelector('.supplierQuantityRows').dataset.counter;
+                        
+                        $.get('database/get-product-supplier-info.php', {id: id}, function(data) {
+                            t.populateSupplierSelections(data, sQRowId);
+                        }, 'json');
+                    }
+                });
+            },
+
+            this.populateSupplierSelections = function(data, sQRowId) {
+                let supplierQuantityRows = '';
+
+                data.forEach((supplier) => {
+                    supplierQuantityRows += '\
+                        <div class="row">\
+                            <div style="width: 30%;"><p class="supplierName">'+ supplier.supplier_name +'</p></div>\
+                            <div style="width: 50%;">\
+                                <label for="orderCount">Order Quantity:</label>\
+                                <input type="number" class="addUserInput orderQtyCount" placeholder=" 0" id="orderCount" name="orderCount['+ sQRowId +']['+ supplier.id +']" />\
+                            </div>\
+                        </div>'; 
+                });
+
+                // Attaching the supplier selections to the product order row
+                let sQRow = document.getElementById('sQRows-' + sQRowId);
+                sQRow.innerHTML = supplierQuantityRows;
+            }
+        }
+
+        var script = new script();
+        script.initialize();
+    </script>
     </body>
 </html>
