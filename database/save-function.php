@@ -48,5 +48,5 @@
         'message' => $success ? 'Product order has been successfully placed!' : $message
     ];
 
-    header('location: ../stock-order.php');
+    header('location: ../add-stock-order.php');
 ?>

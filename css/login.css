@@ -610,7 +610,7 @@ i.leftIconArrow{
 
 /* Supplier Management Pages Styling */
 
-/* Stock Order Page Styling */
+/* Add and View Stock Orders Page Styling */
 .orderBtn{
     height: 30px;
     border: none;
@@ -697,4 +697,63 @@ i.leftIconArrow{
     border-radius: 5px;
 }
 
+.orderNum{
+    border: solid 1px #d1d1d1;
+    border-radius: 5px;
+    background: #fbfbfb;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.orderNum p{
+    font-size: 16px;
+    font-weight: bold;
+    color: #cc7e7e;
+    text-transform: uppercase;
+}
+
+
+.orderNum table td, .orderNum table th{
+    border: none;
+    border-bottom: 1px dotted #d1d1d1;
+    padding: 10px 10px;
+    font-size: 14px;
+}
+
+.stockOrderButtonContainers{
+    margin-top: 10px;
+}
+
+.editOrderBtn{
+    border: 1px solid #cc7e7e;
+    background: #fbfbfb;
+    color: #cc7e7e;
+}
+
+.editOrderBtn:hover{
+    color: #fff;
+}
+
+.status{
+    font-size: 12px;
+    border: 1px solid;
+    border-radius: 100px;
+    padding: 4px 5px;
+}
+
+.status-CANCELLED{
+    background: #ff7c76;
+    border-color: #556455;
+}
+
+.status-PENDING{
+    background: #ffbd76;
+    border-color: #556455;
+}
+
+
+.status-RECEIVED{
+    background: #8ecc7e;
+    border-color: #556455;
+}
 

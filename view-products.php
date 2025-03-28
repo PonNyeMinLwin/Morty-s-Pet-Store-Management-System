@@ -127,11 +127,6 @@
 
             // Looking for a click function 
             this.registerEvents = function() {
-                $(document).on('submit', '#editProductInfoForm', function(e) {
-                    e.preventDefault();
-                    script.saveProductUpdatedData(this);
-                });
-
                 document.addEventListener('click', function(e) {
                     targetElement = e.target;
 
@@ -177,6 +172,11 @@
                         
                         t.toggleEditDialog(id);
                     }
+                });
+
+                $(document).on('submit', '#editProductInfoForm', function(e) {
+                    e.preventDefault();
+                    script.saveProductUpdatedData(this);
                 });
             },
 

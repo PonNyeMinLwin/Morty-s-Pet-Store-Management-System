@@ -10,7 +10,7 @@
 ?>
 <html>
     <head>
-        <title>Stock Orders - Morty's Pet Store Management System</title>
+        <title>Add Stock Orders - Morty's Pet Store Management System</title>
         <?php include('prefabs/script-header-links.php'); ?>
     </head> 
     <body>
@@ -22,7 +22,7 @@
                     <div class="contentMainBody">
                         <div class="row">
                             <div class="column column-12">
-                                <h1 class="columnHeader"><i class="fa-solid fa-tags"></i> Product Order</h1> 
+                                <h1 class="columnHeader"><i class="fa-solid fa-tags"></i> Product Orders</h1> 
                                 <div>
                                     <form action="database/save-function.php" method="POST">
                                         <div class="rightButtons">

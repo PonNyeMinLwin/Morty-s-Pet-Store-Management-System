@@ -23,7 +23,17 @@
                     <ul class="dropDownMenus">
                         <li><a href="./view-products.php" class="functions"><i class="fa-regular fa-circle"></i>View Products</a></li>
                         <li><a href="./add-products.php" class="functions"><i class="fa-regular fa-circle"></i>Add Products</a></li>
-                        <li><a href="./stock-order.php" class="functions"><i class="fa-regular fa-circle"></i>Order Products</a></li>
+                    </ul>
+                </li>
+                <li class="sideBarMainList">
+                    <a href="javascript:void(0);" class="dropDownFunction">
+                        <i class="fa-solid fa-receipt"></i>
+                        <span class="sideBarText dropDownFunction"> Stock Orders</span>
+                        <i class="fa-solid fa-angle-left leftIconArrow dropDownFunction"></i>
+                    </a>
+                    <ul class="dropDownMenus">
+                        <li><a href="./view-stock-order.php" class="functions"><i class="fa-regular fa-circle"></i>View Stock Orders</a></li>
+                        <li><a href="./add-stock-order.php" class="functions"><i class="fa-regular fa-circle"></i>Add New Stock Order</a></li>
                     </ul>
                 </li>
                 <li class="sideBarMainList">
