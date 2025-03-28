@@ -58,7 +58,6 @@
                                                         <th>Product Name</th>
                                                         <th>Amt</th>
                                                         <th>Amt Received</th>
-                                                        <th>Amt Remaining</th>
                                                         <th>Status</th>
                                                         <th>Supplier Name</th>
                                                         <th>Ordered By</th>
@@ -72,15 +71,14 @@
                                                     <tr>
                                                         <td><?= $key + 1 ?></td>
                                                         <td class="product"><?= $product_order['product_name'] ?></td>
-                                                        <td class="amt_order"><?= $product_order['stock_ordered'] ?></td>
-                                                        <td class="amt_get"><?= $product_order['stock_received'] ?></td>
-                                                        <td class="amt_left"><?= $product_order['stock_remaining_in_order'] ?></td>
-                                                        <td class="amt_status"><span class="status status-<?= $product_order['status'] ?>"><?= $product_order['status'] ?></span></td>
+                                                        <td class="amtOrder"><?= $product_order['stock_ordered'] ?></td>
+                                                        <td class="amtGet"><?= $product_order['stock_received'] ?></td>
+                                                        <td class="amtStatus"><span class="status status-<?= $product_order['status'] ?>"><?= $product_order['status'] ?></span></td>
                                                         <td class="supplier"><?= $product_order['supplier_name'] ?></td>
                                                         <td class="name"><?= $product_order['first_name'] . ' ' . $product_order['last_name'] ?></td>
-                                                        <td class="date_create">
+                                                        <td class="dateCreate">
                                                             <?= $product_order['created_at'] ?>
-                                                            <input type="hidden" class="batch_id" value="<?= $product_order['id'] ?>">
+                                                            <input type="hidden" class="batchId" value="<?= $product_order['id'] ?>">
                                                         </td>
                                                     </tr>
                                                     <?php } ?>
@@ -124,29 +122,58 @@
                             batchData = 'orderNum-' + targetElement.dataset.id;
 
                             // Getting all purchase order data to be edited
+                            orderIdList = document.querySelectorAll('#' + batchData + ' .batchId');
                             productList = document.querySelectorAll('#' + batchData + ' .product');
-                            amt_order = document.querySelectorAll('#' + batchData + ' .amt_order');
-                            amt_get = document.querySelectorAll('#' + batchData + ' .amt_get');
-                            //amt_left = document.querySelectorAll('#' + batchData + ' .amt_left');
-                            status = document.querySelectorAll('#' + batchData + ' .amt_status');
-                            supplier = document.querySelectorAll('#' + batchData + ' .supplier');
-
+                            amtOrderedList = document.querySelectorAll('#' + batchData + ' .amtOrder');
+                            amtGotList = document.querySelectorAll('#' + batchData + ' .amtGet');
+                            statusList = document.querySelectorAll('#' + batchData + ' .amtStatus');
+                            supplierList = document.querySelectorAll('#' + batchData + ' .supplier');
+                            
                             // Putting them in an array
                             orderDataArr = [];
-                            for(i = 0; i < productList.length; i++) {
+                            for(i = 0; i < productList.length; i++) {    
                                 orderDataArr.push({
+                                    id: orderIdList[i].value,
                                     product: productList[i].innerText,
-                                    amt_order: amt_order[i].innerText,
-                                    amt_get: amt_get[i].innerText,
-                                    //amt_left: amt_left[i].innerText,
-                                    status: status[i].innerText,
-                                    supplier: supplier[i].innerText
+                                    amtOrdered: amtOrderedList[i].innerText,
+                                    amtGot: amtGotList[i].innerText,
+                                    //amtLeft: amtLeftList[i].innerText,
+                                    status: statusList[i].innerText,
+                                    supplier: supplierList[i].innerText
                                 });
                             }
 
-                            productList.forEach((product, index) => {
-                                orderDataArr[index]['product'] = product.innerText;
-                            });  
+                            // Storing the edit order data
+                            var orderDataHtml = '<table id="editOrderTable-'+ targetElement.dataset.id +'"><thead><tr><th>Product Name</th><th>Order Amount</th><th>Amount Received</th><th>Status</th><th>Supplier Name</th></tr></thead><tbody>';
+
+                            orderDataArr.forEach((orderData) => {
+                                orderDataHtml += '<tr>\
+                                    <td class="product">'+ orderData.product +'</td>\
+                                    <td class="amtOrder">'+ orderData.amtOrdered +'</td>\
+                                    <td class="amtGet"><input type="number" value='+ orderData.amtGot +' /></td>\
+                                    <td class="statusSelectionBox">\
+                                        <select>\
+                                            <option value="pending" '+ (orderData.status == 'pending' ? 'selected' : '') +'>Pending</option>\
+                                            <option value="received" '+ (orderData.status == 'received' ? 'selected' : '') +'>Received</option>\
+                                            <option value="cancelled" '+ (orderData.status == 'cancelled' ? 'selected' : '') +'>Cancelled</option>\
+                                        </select>\
+                                        <input type="hidden" class="batchId" value="'+ orderData.id +'">\
+                                    </td>\
+                                    <td class="supplier">'+ orderData.supplier +'</td>\
+                                </tr>';
+                            });
+                            
+                            orderDataHtml += '</tbody></table>';
+
+                            name = targetElement.dataset.name;
+
+                            BootstrapDialog.confirm({
+                                type: BootstrapDialog.TYPE_PRIMARY,
+                                title: 'Edit Product Order: Purchase #: <strong>'+ targetElement.dataset.id +'</strong>',
+                                message: orderDataHtml,
+                                callback: function(toAdd) {
+                                }
+                            });
                         }
                     });
                 }
