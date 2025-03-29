@@ -76,7 +76,7 @@
                                                         <td class="amtStatus"><span class="status status-<?= $product_order['status'] ?>"><?= $product_order['status'] ?></span></td>
                                                         <td class="supplier"><?= $product_order['supplier_name'] ?></td>
                                                         <td class="name"><?= $product_order['first_name'] . ' ' . $product_order['last_name'] ?></td>
-                                                        <td class="dateCreate">
+                                                        <td>
                                                             <?= $product_order['created_at'] ?>
                                                             <input type="hidden" class="batchId" value="<?= $product_order['id'] ?>">
                                                         </td>
@@ -106,11 +106,6 @@
             function script() {
                 var t = this;
 
-                // Initialising events
-                this.initialize = function() {
-                    this.registerEvents();
-                },
-
                 // Looking for clicks on certain parts of the page
                 this.registerEvents = function() {
                     document.addEventListener('click', function(e) {
@@ -118,44 +113,52 @@
 
                         if(targetElement.classList.contains('editOrderBtn')) {
                             e.preventDefault();
-
-                            batchData = 'orderNum-' + targetElement.dataset.id;
+                            
+                            batchNum = targetElement.dataset.id;
+                            batchData = 'orderNum-' + batchNum;
 
                             // Getting all purchase order data to be edited
-                            orderIdList = document.querySelectorAll('#' + batchData + ' .batchId');
                             productList = document.querySelectorAll('#' + batchData + ' .product');
                             amtOrderedList = document.querySelectorAll('#' + batchData + ' .amtOrder');
                             amtGotList = document.querySelectorAll('#' + batchData + ' .amtGet');
                             statusList = document.querySelectorAll('#' + batchData + ' .amtStatus');
                             supplierList = document.querySelectorAll('#' + batchData + ' .supplier');
+                            orderIdList = document.querySelectorAll('#' + batchData + ' .batchId');
                             
                             // Putting them in an array
                             orderDataArr = [];
-                            for(i = 0; i < productList.length; i++) {    
+                            for(i=0; i<productList.length;i++) {    
                                 orderDataArr.push({
-                                    id: orderIdList[i].value,
                                     product: productList[i].innerText,
                                     amtOrdered: amtOrderedList[i].innerText,
                                     amtGot: amtGotList[i].innerText,
-                                    //amtLeft: amtLeftList[i].innerText,
                                     status: statusList[i].innerText,
-                                    supplier: supplierList[i].innerText
+                                    supplier: supplierList[i].innerText,
+                                    id: orderIdList[i].value
                                 });
                             }
 
                             // Storing the edit order data
-                            var orderDataHtml = '<table id="editOrderTable-'+ targetElement.dataset.id +'"><thead><tr><th>Product Name</th><th>Order Amount</th><th>Amount Received</th><th>Status</th><th>Supplier Name</th></tr></thead><tbody>';
+                            var orderDataHtml = '<table id="editOrderTable-'+ batchNum +'">\
+                                <thead>\
+                                    <tr>\
+                                        <th>Product Name</th>\
+                                        <th>Order Amount</th>\
+                                        <th>Amount Received</th>\
+                                        <th>Status</th>\
+                                        <th>Supplier Name</th>\
+                                        </tr></thead><tbody>';
 
                             orderDataArr.forEach((orderData) => {
                                 orderDataHtml += '<tr>\
                                     <td class="product">'+ orderData.product +'</td>\
                                     <td class="amtOrder">'+ orderData.amtOrdered +'</td>\
                                     <td class="amtGet"><input type="number" value='+ orderData.amtGot +' /></td>\
-                                    <td class="statusSelectionBox">\
+                                    <td class="statusOptions">\
                                         <select>\
-                                            <option value="pending" '+ (orderData.status == 'pending' ? 'selected' : '') +'>Pending</option>\
-                                            <option value="received" '+ (orderData.status == 'received' ? 'selected' : '') +'>Received</option>\
-                                            <option value="cancelled" '+ (orderData.status == 'cancelled' ? 'selected' : '') +'>Cancelled</option>\
+                                            <option value="PENDING" '+ (orderData.status == 'PENDING' ? 'selected' : '') +'>PENDING</option>\
+                                            <option value="COMPLETE" '+ (orderData.status == 'COMPLETE' ? 'selected' : '') +'>COMPLETE</option>\
+                                            <option value="CANCELLED" '+ (orderData.status == 'CANCELLED' ? 'selected' : '') +'>CANCELLED</option>\
                                         </select>\
                                         <input type="hidden" class="batchId" value="'+ orderData.id +'">\
                                     </td>\
@@ -169,13 +172,55 @@
 
                             BootstrapDialog.confirm({
                                 type: BootstrapDialog.TYPE_PRIMARY,
-                                title: 'Edit Product Order: Purchase #: <strong>'+ targetElement.dataset.id +'</strong>',
+                                title: 'Edit Product Order: Purchase #: <strong>'+ batchNum +'</strong>',
                                 message: orderDataHtml,
                                 callback: function(toAdd) {
+                                    if(toAdd) {
+                                        editFormData = 'editOrderTable-' + batchNum;
+
+                                        amtGotList = document.querySelectorAll('#' + editFormData + ' .amtGet input');
+                                        statusList = document.querySelectorAll('#' + editFormData + ' .statusOptions select');
+                                        orderIdList = document.querySelectorAll('#' + editFormData + ' .batchId');
+                                        amtOrderedList = document.querySelectorAll('#' + editFormData + ' .amtOrder');
+
+                                        editFormDataArr = [];
+
+                                        for(i=0; i<amtGotList.length;i++) {
+                                            editFormDataArr.push({
+                                                amtGot: amtGotList[i].value,
+                                                status: statusList[i].value,
+                                                id: orderIdList[i].value,
+                                                amtOrdered: amtOrderedList[i].innerText
+                                            });
+                                        }
+
+                                        $.ajax({
+                                            method: 'POST',
+                                            data: { payload: editFormDataArr },
+                                            dataType: 'json',
+                                            url: 'database/update-orders.php',
+                                            success: function(data) {
+                                                message = data.message;
+
+                                                BootstrapDialog.alert({
+                                                    type: data.success ? BootstrapDialog.TYPE_SUCCESS : BootstrapDialog.TYPE_DANGER,
+                                                    message: message,
+                                                    callback: function() {
+                                                        if(data.success) location.reload();
+                                                    }
+                                                });
+                                            }
+                                        });
+                                    }
                                 }
                             });
                         }
                     });
+                },
+
+                 // Initialising events
+                this.initialize = function() {
+                    this.registerEvents();
                 }
             }
 
