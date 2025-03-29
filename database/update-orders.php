@@ -8,7 +8,7 @@
             $amt_received = (int) $order['amtLeft'];
 
             // Use this if statement for Add New Stock Order page as well
-            if($amt_received > 0) {
+            if($amt_received >= 0) {
                 $curr_amt = (int) $order['amtGot'];
                 $status = $order['status'];
                 $id = $order['id'];
@@ -43,7 +43,7 @@
                 $stmt->execute([$edited_stock, $product_id]);
             }
         }
-                 
+
         $response = [
             'success' => true, 
             'message' => 'Purchase order has been successfully updated!'
