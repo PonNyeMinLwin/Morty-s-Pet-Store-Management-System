@@ -31,7 +31,7 @@
                                                     <th>#</th>
                                                     <th>Image</th>
                                                     <th>Product</th>
-                                                    <th width="5%">Type</th>
+                                                    <th width="5%">Stock</th>
                                                     <th width="20%">Description</th>
                                                     <th width="5%">Price</th>
                                                     <th width="15%">Suppliers</th>

@@ -26,9 +26,8 @@
                                     <div class="orderNumContainer">
                                         <?php
                                             $stmt = $conn->prepare(
-                                                "SELECT purchase_order.id, products.product_name, purchase_order.stock_ordered, users.first_name, users.last_name, 
-                                                        purchase_order.batch, purchase_order.stock_remaining_in_order, purchase_order.stock_received, 
-                                                        suppliers.supplier_name, purchase_order.status, purchase_order.created_at, purchase_order.updated_at
+                                                "SELECT purchase_order.id, purchase_order.product_id, products.product_name, purchase_order.stock_ordered, users.first_name, users.last_name, 
+                                                        purchase_order.batch, purchase_order.stock_received, suppliers.supplier_name, purchase_order.status, purchase_order.created_at
                                                 FROM purchase_order, suppliers, products, users
                                                 WHERE purchase_order.supplier_id = suppliers.id AND purchase_order.product_id = products.id 
                                                 AND purchase_order.created_by = users.id
@@ -56,7 +55,7 @@
                                                     <tr>
                                                         <th>#</th>
                                                         <th>Product Name</th>
-                                                        <th>Amt</th>
+                                                        <th>Order Amt</th>
                                                         <th>Amt Received</th>
                                                         <th>Status</th>
                                                         <th>Supplier Name</th>
@@ -79,6 +78,7 @@
                                                         <td>
                                                             <?= $product_order['created_at'] ?>
                                                             <input type="hidden" class="batchId" value="<?= $product_order['id'] ?>">
+                                                            <input type="hidden" class="orderedProductId" value="<?= $product_order['product_id'] ?>">
                                                         </td>
                                                     </tr>
                                                     <?php } ?>
@@ -124,6 +124,7 @@
                             statusList = document.querySelectorAll('#' + batchData + ' .amtStatus');
                             supplierList = document.querySelectorAll('#' + batchData + ' .supplier');
                             orderIdList = document.querySelectorAll('#' + batchData + ' .batchId');
+                            productIdList = document.querySelectorAll('#' + batchData + ' .orderedProductId');
                             
                             // Putting them in an array
                             orderDataArr = [];
@@ -134,33 +135,40 @@
                                     amtGot: amtGotList[i].innerText,
                                     status: statusList[i].innerText,
                                     supplier: supplierList[i].innerText,
-                                    id: orderIdList[i].value
+                                    id: orderIdList[i].value,
+                                    productId: productIdList[i].value
                                 });
                             }
 
                             // Storing the edit order data
-                            var orderDataHtml = '<table id="editOrderTable-'+ batchNum +'">\
+                            var orderDataHtml = '<div class="dialogBox">\
+                            <table id="editOrderTable-'+ batchNum +'">\
                                 <thead>\
                                     <tr>\
                                         <th>Product Name</th>\
                                         <th>Order Amount</th>\
-                                        <th>Amount Received</th>\
+                                        <th>Received</th>\
+                                        <th>Amount Delivered</th>\
                                         <th>Status</th>\
                                         <th>Supplier Name</th>\
-                                        </tr></thead><tbody>';
+                                    </tr>\
+                                </thead>\
+                            <tbody>';
 
                             orderDataArr.forEach((orderData) => {
                                 orderDataHtml += '<tr>\
                                     <td class="product">'+ orderData.product +'</td>\
                                     <td class="amtOrder">'+ orderData.amtOrdered +'</td>\
-                                    <td class="amtGet"><input type="number" value='+ orderData.amtGot +' /></td>\
+                                    <td class="amtGot">'+ orderData.amtGot +'</td>\
+                                    <td class="amtLeft"><input type="number" value="0" /></td>\
                                     <td class="statusOptions">\
                                         <select>\
                                             <option value="PENDING" '+ (orderData.status == 'PENDING' ? 'selected' : '') +'>PENDING</option>\
-                                            <option value="COMPLETE" '+ (orderData.status == 'COMPLETE' ? 'selected' : '') +'>COMPLETE</option>\
+                                            <option value="COMPLETED" '+ (orderData.status == 'COMPLETED' ? 'selected' : '') +'>COMPLETED</option>\
                                             <option value="CANCELLED" '+ (orderData.status == 'CANCELLED' ? 'selected' : '') +'>CANCELLED</option>\
                                         </select>\
                                         <input type="hidden" class="batchId" value="'+ orderData.id +'">\
+                                        <input type="hidden" class="orderedProductId" value="'+ orderData.productId +'">\
                                     </td>\
                                     <td class="supplier">'+ orderData.supplier +'</td>\
                                 </tr>';
@@ -178,19 +186,23 @@
                                     if(toAdd) {
                                         editFormData = 'editOrderTable-' + batchNum;
 
-                                        amtGotList = document.querySelectorAll('#' + editFormData + ' .amtGet input');
+                                        amtGotList = document.querySelectorAll('#' + editFormData + ' .amtGot');
+                                        amtLeftList = document.querySelectorAll('#' + editFormData + ' .amtLeft input');
                                         statusList = document.querySelectorAll('#' + editFormData + ' .statusOptions select');
                                         orderIdList = document.querySelectorAll('#' + editFormData + ' .batchId');
                                         amtOrderedList = document.querySelectorAll('#' + editFormData + ' .amtOrder');
+                                        productIdList = document.querySelectorAll('#' + editFormData + ' .orderedProductId');
 
                                         editFormDataArr = [];
 
-                                        for(i=0; i<amtGotList.length;i++) {
+                                        for(i=0; i<amtLeftList.length;i++) {
                                             editFormDataArr.push({
-                                                amtGot: amtGotList[i].value,
+                                                amtGot: amtGotList[i].innerText,
+                                                amtLeft: amtLeftList[i].value,
                                                 status: statusList[i].value,
                                                 id: orderIdList[i].value,
-                                                amtOrdered: amtOrderedList[i].innerText
+                                                amtOrdered: amtOrderedList[i].innerText,
+                                                product_id: productIdList[i].value
                                             });
                                         }
 
