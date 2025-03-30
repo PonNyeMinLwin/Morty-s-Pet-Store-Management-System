@@ -33,11 +33,10 @@
                                                     <th>Product</th>
                                                     <th width="5%">Stock</th>
                                                     <th width="20%">Description</th>
-                                                    <th width="5%">Price</th>
                                                     <th width="15%">Suppliers</th>
                                                     <th>Created By</th>
-                                                    <th>Created At</th>
-                                                    <th>Updated At</th>
+                                                    <th width="5%">Created At</th>
+                                                    <th width="5%">Updated At</th>
                                                     <th width="10%">Action</th>
                                                 </tr>
                                             </thead>
@@ -47,9 +46,8 @@
                                                         <td><?= $index + 1 ?></td>
                                                         <td class="email"><img class="productImgs" src="inputs/product-images/<?= $product['img'] ?>" alt="" /></td>
                                                         <td class="firstName"><?= $product['product_name'] ?></td>
-                                                        <td class="lastName"><?= $product['product_type'] ?></td>
+                                                        <td class="lastName"><?= number_format($product['stock']) ?></td>
                                                         <td class="email"><?= $product['info'] ?></td>
-                                                        <td class="email"><?= $product['price'] ?></td>
                                                         <td class="email">
                                                             <?php
                                                                 $supplier_list = '';

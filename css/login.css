@@ -430,7 +430,6 @@ div.dashBoardGraphBoardContent{
 div.contentMainBody{
     /*background: url('../assets/images/pet-background.jpg') no-repeat center center fixed;*/
     background-size: cover;
-    min-height: 800px;
     height: 100%;
     padding-left: 20px;
     margin-top: 20px;
@@ -750,6 +749,18 @@ i.leftIconArrow{
     color: #fff;
 }
 
+.trackOrderBtn{
+    border: 1px solid #cc7e7e;
+    background: #fbfbfb;
+    color: #cc7e7e;
+}
+
+.trackOrderBtn:hover{
+    color: #000000;
+    background: #cc7e7e;
+    border-radius: 30px;
+}
+
 .status{
     font-size: 12px;
     border: 1px solid;
@@ -786,6 +797,10 @@ i.leftIconArrow{
 
 .dialogBox {
     overflow-x: auto; 
+}
+
+.orderLogTable th{
+    font-size: 18px;
 }
 
 

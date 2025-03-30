@@ -6,10 +6,13 @@
     $user = $_SESSION['user'];
 
     // Getting pie chart data - product order status relation
-    include('database/get-order-status-data.php');
+    include('database/get-pie-chart-data.php');
 
     // Getting bar chart data - supplier product (stock amount) relation
-    include('database/get-supplier-product-data.php');
+    include('database/get-bar-chart-data.php');
+
+    // Getting line chart data - supplier-transactions-history relation
+    include('database/get-line-chart-data.php');
 ?>
 
 <html>
@@ -32,21 +35,22 @@
                             </figure>
                         </div>
                         <div class="contentSections">
-                            <figure class="pieChart">
+                            <figure class="barChart">
                                 <div id="barChartContainer"></div>
-                                <p class="pieChartDescription"></p>
+                                <p class="barChartDescription"></p>
                             </figure>
-                        </div>      
+                        </div>        
                     </div>
+                        <div id="lineChartContainer"></div>    
                 </div>
             </div>
         </div>
         
         <script src="js/script.js"></script>
         
-        // These are 3rd party libraries and scripts used in this project to create the pie chart and other functionalities
+        <!-- These are 3rd party libraries and scripts used in this project to create the pie chart and other functionalities -->
 
-        // Highcharts Library for Creating Charts 
+        <!-- Highcharts Library for Creating Charts -->
         <script src="https://code.highcharts.com/highcharts.js"></script>
         <script src="https://code.highcharts.com/modules/accessibility.js"></script>
         <script src="https://code.highcharts.com/modules/exporting.js"></script>
@@ -54,7 +58,7 @@
         <script>
             var graphData = <?= json_encode($result_list) ?>;
 
-            // Build the chart 
+            // Building the pie chart
             Highcharts.chart('pieChartContainer', {
                 chart: {
                     plotBackgroundColor: null,
@@ -92,52 +96,84 @@
                 }]
             });
             
-            var supplierData = <?= json_encode($categories) ?>; 
-            var productData = <?= json_encode($products) ?>; 
-            var productCountData = <?= json_encode($product_count) ?>; 
+            var productData = <?= json_encode($products) ?>; // Product names
+            var supplierSeries = <?= json_encode($supplier_series) ?>; // Supplier stock data
 
-            var seriesData = supplierData.map((supplier, index) => {
-                return {
-                    name: supplier,
-                    data: productCountData[index] 
-                };
+            // Calculating total stock for each product
+            var totalStockData = productData.map((_, index) => {
+                return supplierSeries.reduce((sum, series) => sum + series.data[index], 0);
             });
-            
 
+            // Building the grouped column chart
             Highcharts.chart('barChartContainer', {
                 chart: {
-                    type: 'column'
+                    type: 'column' // Use a column chart
                 },
                 title: {
-                    text: 'Supplier Product (Stock Count) Relation'
+                    text: 'Product Stock and Supplier Contribution'
                 },
                 xAxis: {
-                    categories: productData,
-                    crosshair: true,
+                    categories: productData, // Product names as categories
+                    crosshair: true
                 },
                 yAxis: {
                     min: 0,
                     title: {
-                        text: 'Units'
+                        text: 'Units in Stock'
                     }
                 },
-                toolTip: {
-                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
-                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                        '<td style="padding:0"><b>{point.y} units</b></td></tr>',
-                    footerFormat: '</table>',
-                    shared: true,
-                    useHTML: true
+                tooltip: {
+                    formatter: function () {
+                        // Calculate the total stock for the hovered product
+                        var productIndex = this.point.index;
+                        var totalStock = totalStockData[productIndex];
+
+                        // Return the custom tooltip content
+                        return `
+                            <b>Total Stock: ${totalStock} units</b><br/>
+                            ${this.series.name}: ${this.y} units
+                        `;
+                    },
+                    useHTML: true // Enable HTML in the tooltip
                 },
                 plotOptions: {
                     column: {
-                        pointPadding: 0.2,
+                        grouping: true, // Group columns by product
+                        shadow: false,
                         borderWidth: 0
                     }
                 },
+                series: supplierSeries // Use the supplier series data
+            });
+
+            var lineData = <?= json_encode($line_x_values) ?>; 
+            var lineValues = <?= json_encode($line_y_values) ?>; 
+            
+            console.log(lineData, lineValues); // Debugging output
+
+            // Building the line chart
+            Highcharts.chart('lineChartContainer', {
+                chart: {
+                    type: 'spline'
+                },
+                title: {
+                    text: 'Daily Stock Shipments Overview'
+                },
+                xAxis: {
+                    categories: lineData
+                },
+                yAxis: {
+                    title: { text: 'Product Qty (Units)' }
+                },
+                plotOptions: {
+                    line: {
+                        dataLabels: { enabled: false },
+                        enableMouseTracking: true
+                    }
+                },
                 series: [{
-                    name: 'Stock',
-                    data: productCountData
+                    name: 'Supplier 1',
+                    data: lineValues 
                 }]
             });
         </script>

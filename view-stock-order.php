@@ -31,7 +31,7 @@
                                                 FROM purchase_order, suppliers, products, users
                                                 WHERE purchase_order.supplier_id = suppliers.id AND purchase_order.product_id = products.id 
                                                 AND purchase_order.created_by = users.id
-                                                ORDER BY purchase_order.stock_ordered ASC"
+                                                ORDER BY purchase_order.id ASC"
                                             );                    
                                             
                                             $stmt->execute();
@@ -61,6 +61,7 @@
                                                         <th>Supplier Name</th>
                                                         <th>Ordered By</th>
                                                         <th>Ordered At</th>
+                                                        <th>Order Log</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -79,6 +80,9 @@
                                                             <?= $product_order['created_at'] ?>
                                                             <input type="hidden" class="batchId" value="<?= $product_order['id'] ?>">
                                                             <input type="hidden" class="orderedProductId" value="<?= $product_order['product_id'] ?>">
+                                                        </td>
+                                                        <td>
+                                                            <button class="btn trackOrderBtn" data-id="<?= $product_order['id'] ?>"><i class="fa-solid fa-magnifying-glass"></i> Track Order</button>  
                                                         </td>
                                                     </tr>
                                                     <?php } ?>
@@ -226,6 +230,54 @@
                                     }
                                 }
                             });
+                        }
+
+                        if(targetElement.classList.contains('trackOrderBtn')) {
+                            e.preventDefault();
+
+                            let id = targetElement.dataset.id;
+
+                            $.get('database/get-order-history-info.php', {id: id}, function(data) {
+                                if(data.length) {   
+                                    logRows = '';
+
+                                    data.forEach((orderLog, id) => {
+                                        logRows += '\
+                                        <tr>\
+                                            <td>'+ (id + 1) +'</td>\
+                                            <td>'+ (new Date(orderLog['order_completed_at'])).toUTCString() +'</td>\
+                                            <td>'+ orderLog['amount'] +'</td>\
+                                        </tr>';
+                                    });
+
+                                    orderLogDataHtml = '<div class="dialogBox">\
+                                        <table class="orderLogTable">\
+                                            <thead>\
+                                                <tr>\
+                                                    <th>#</th>\
+                                                    <th>Order Received Date</th>\
+                                                    <th>Order Amount</th>\
+                                                </tr>\
+                                            </thead>\
+                                            <tbody>'+ logRows +'</tbody>\
+                                        </table>\
+                                    </div>';
+
+                                    BootstrapDialog.show({
+                                        title: '<strong>Order History</strong>',
+                                        type: BootstrapDialog.TYPE_PRIMARY,
+                                        message: orderLogDataHtml
+                                    });
+                                } else {
+                                    BootstrapDialog.alert({
+                                        type: BootstrapDialog.TYPE_DANGER,
+                                        title: '<strong>Error</strong>',
+                                        message: 'Previous orders not found for the selected ordered product!'
+                                    });
+                                }
+                            }, 'json');
+                            
+                            // Getting the order log data
                         }
                     });
                 },
