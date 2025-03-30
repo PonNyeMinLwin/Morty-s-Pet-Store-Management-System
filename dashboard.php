@@ -135,7 +135,10 @@
                         borderWidth: 0
                     }
                 },
-                series: seriesData
+                series: [{
+                    name: 'Stock',
+                    data: productCountData
+                }]
             });
         </script>
     </body>
