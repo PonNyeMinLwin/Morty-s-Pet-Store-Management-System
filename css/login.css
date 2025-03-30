@@ -803,6 +803,54 @@ i.leftIconArrow{
     font-size: 18px;
 }
 
+/* Business Reports Page Styling */
+.reportsBoxContainer{
+    display: flex;
+    justify-content: flex-start;
+    padding: 25px 20px;
+}
+
+.reportsBox{
+    text-align: center;
+    border: 1px solid #452d2d;
+    padding: 10px 6px;
+    background: #fff;
+    font-size: 18px;
+    margin-left: 20px;
+    width: 100%;
+    height: 90px;
+}
+
+.reportsBox:hover{
+    background: #9d3eeb;
+    color: #fff;
+    transition: 0.3s all;
+    border-radius: 20px;
+}
+
+.reportsBox p{
+    font-size: 20px;
+    font-weight: bold;
+    color: #f37f7f;
+}
+
+.exportBtns{
+    font-size: 18px;
+    padding: 3px 15px;
+    border-radius: 5px;
+    display: inline-block;
+    text-decoration: none;
+    background: #fff;
+    color: #c962e2;
+    margin-top: 5px;
+}
+
+.exportBtns:hover{
+    border-radius: 20px;
+    background: #c962e2;
+    color: #fff;
+    transition: 0.3s all;
+}
 
 /* Highcharts Styling */
 
@@ -848,4 +896,3 @@ i.leftIconArrow{
 .highcharts-description {
     margin: 0.3rem 10px;
 }
-

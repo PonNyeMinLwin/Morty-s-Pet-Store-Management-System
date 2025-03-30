@@ -15,6 +15,9 @@
                     <a href="./dashboard.php"><i class="fa-solid fa-gauge-high"></i><span class="sideBarText"> Dashboard</span></a>
                 </li>
                 <li class="sideBarMainList">
+                    <a href="./reports.php"><i class="fa-solid fa-file-lines"></i><span class="sideBarText"> Business Reports</span></a>
+                </li>
+                <li class="sideBarMainList">
                     <a href="javascript:void(0);" class="dropDownFunction">
                         <i class="fa-solid fa-paw dropDownFunction"></i>
                         <span class="sideBarText dropDownFunction">Products</span>
