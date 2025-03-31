@@ -1,0 +1,138 @@
+/* Dashboard Styling */
+#dashBoardMainContainer{
+    display: flex;
+    flex-direction: row;
+}
+
+div.dashBoardToggleSideBar{
+    width: 18%;
+    background: #332323;
+    height: 200vh;
+}
+
+div.dashBoardContentContainer{
+    width: 70%;
+    background: #f4f6f9;
+}
+
+h3.sideBarTitle{
+    color: #f685a1;
+    font-size: 22px;
+    margin-top: 30px;
+    margin-left: 7px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+div.dashBoardUserSection{
+    text-align: center;
+    position: relative;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #fff;
+}
+
+div.dashBoardUserSection img{
+    width: 60px;
+    display: inline-block;
+    border-radius: 50%;
+    border: 2px solid #f685a1;
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
+div.dashBoardUserSection span{
+    top: 20%;
+    font-size: 20px;
+    text-transform: uppercase;
+    color: #fff;
+    display: inline-block;
+    margin-bottom: 40px;
+}
+
+ul.dashBoardSideBarMenus {
+    padding-left: 0px;
+    margin-top: 10px;
+}
+
+ul.dashBoardSideBarMenus li.sideBarMainList{
+    margin: 20px 1px;
+    padding-top: 20px;
+    font-size: 20px;
+    text-transform: uppercase;
+}
+
+ul.dashBoardSideBarMenus li.sideBarMainList a{
+    text-decoration: none;
+    color: #fff;
+    font-size: 19px;
+    padding-bottom: 15px;
+    padding-right: 10px;
+}
+
+ul.dashBoardSideBarMenus li.sideBarMainList a i{
+    font-size: 24px;
+}
+
+ul.dashBoardSideBarMenus li.sideBarActive{
+    background: #f685a1;
+    color: #fff;
+}
+
+ul.dashBoardSideBarMenus li:hover{
+    background: #f685a1;
+    color: #fff;
+    transition: 0.3s all;
+}
+
+div.contentTopNavBar{
+    display: flex;
+    background: #332323;
+    padding: 20px;
+}
+
+div.contentTopNavBar a{
+    color: #848383;
+    font-size: 20px;
+    text-decoration: none;
+}
+
+a#logOutButton{
+    float: right;
+}
+
+div.dashBoardContent{
+    padding: 0px 0px 10px 10px;
+}
+
+div.dashBoardGraphBoardContent{
+    margin: 50px 50px 100px 50px;
+}
+
+div.contentMainBody{
+    /*background: url('../assets/images/pet-background.jpg') no-repeat center center fixed;*/
+    background-size: cover;
+    height: 100%;
+    padding-left: 20px;
+    margin-top: 20px;
+    border: 2px solid #cdcdcd;
+}
+
+div.contentSections{
+    width: 50%;
+    margin: 10px 15px 10px 5px;
+}
+
+div.dashBoardContentMainBody{
+    display: flex;
+    flex-direction: row;
+}
+
+div.contentTopNavBar.expandedTopNav {
+    height: 100px; /* Adjust to desired expanded height */
+    transition: height 0.3s ease-in-out;
+}
+
+div.dashBoardToggleSideBar.expandedSideBar {
+    width: 25%; /* Adjust to desired expanded width */
+    transition: width 0.3s ease-in-out;
+}

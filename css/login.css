@@ -77,6 +77,19 @@ div#errorMessage{
     padding: 10px;
 }
 
+/* Dropdown Transition Effect */
+div.navBarOptions {
+    height: 0px;
+    overflow: hidden;
+    transition: height 0.3s ease-in-out;
+}
+
+div.navBarOptions ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
 /* Homepage Styling */
 div.homePageBanner{
     background: url('../assets/images/banner-background.jpg') no-repeat center center;

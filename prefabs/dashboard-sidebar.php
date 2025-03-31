@@ -6,7 +6,7 @@
     <div class="dashBoardToggleSideBar" id="dashBoardToggleSideBar">
         <h3 class="sideBarTitle" id="sideBarTitle">Morty's Pet Store Management System</h3>
         <div class="dashBoardUserSection">
-            <img src="assets/profiles/omni-man.jpg" alt="User Image" />
+            <img src="assets/profiles/dog-pfp-1.jpg" alt="User Image" />
             <span><?= $user['first_name'] . ' ' . $user['last_name'] ?></span>
         </div>
         <div class="dashBoardSideBar">
