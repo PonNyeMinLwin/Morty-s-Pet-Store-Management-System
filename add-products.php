@@ -30,10 +30,6 @@
                                             <input type="text" class="addUserInput" placeholder="Enter product name..." id="product_name" name="product_name" />
                                         </div>
                                         <div class="addUserFormInputBox">
-                                            <label for="product_type">Product Type</label>
-                                            <input type="text" class="addUserInput" placeholder="Eg. food, cages, toys" id="product_type" name="product_type" />
-                                        </div>
-                                        <div class="addUserFormInputBox">
                                             <label for="choiceBox">Suppliers</label>
                                             <select name="suppliers[]" id="selectionBox" multiple="">
                                                 <?php

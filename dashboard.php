@@ -27,21 +27,21 @@
             <div class="dashBoardContentContainer" id="dashBoardContentContainer">
                 <?php include('prefabs/dashboard-top-nav-bar.php') ?>
                 <div class="dashBoardGraphBoardContent">
+                    <div id="lineChartContainer"></div>  
                     <div class="dashBoardContentMainBody">
-                        <div class="contentSections">
-                            <figure class="pieChart">
-                                <div id="pieChartContainer"></div>
-                                <p class="pieChartDescription"></p>
-                            </figure>
-                        </div>
                         <div class="contentSections">
                             <figure class="barChart">
                                 <div id="barChartContainer"></div>
                                 <p class="barChartDescription"></p>
                             </figure>
+                        </div>
+                        <div class="contentSections">
+                            <figure class="pieChart">
+                                <div id="pieChartContainer"></div>
+                                <p class="pieChartDescription"></p>
+                            </figure>
                         </div>        
                     </div>
-                        <div id="lineChartContainer"></div>    
                 </div>
             </div>
         </div>

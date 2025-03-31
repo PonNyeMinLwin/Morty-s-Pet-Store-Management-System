@@ -22,14 +22,12 @@
                             <p><i class="fa-solid fa-file-export"></i> Product Inventory Analysis</p>
                             <div class="">
                                 <a href="database/pdf_reports.php?report=productReport" target="_blank" class="exportBtns"><i class="fa-solid fa-file-pdf"></i> PDF</a>
-                                <a href="" class="exportBtns"><i class="fa-solid fa-file-excel"></i> Excel</a>
                             </div>
                         </div>
                         <div class="reportsBox">
                             <p><i class="fa-solid fa-file-export"></i> Product Suppliers Analysis</p>
                             <div class="">
                                 <a href="database/pdf_reports.php?report=supplierReport" target="_blank" class="exportBtns"><i class="fa-solid fa-file-pdf"></i> PDF</a>
-                                <a href="" class="exportBtns"><i class="fa-solid fa-file-excel"></i> Excel</a>
                             </div>
                         </div>
                     </div>
@@ -38,14 +36,12 @@
                             <p><i class="fa-solid fa-file-export"></i> Stock Purchase Order Analysis</p>
                             <div class="">
                                 <a href="database/pdf_reports.php?report=orderReport" target="_blank" class="exportBtns"><i class="fa-solid fa-file-pdf"></i> PDF</a>
-                                <a href="" class="exportBtns"><i class="fa-solid fa-file-excel"></i> Excel</a>
                             </div>
                         </div>
                         <div class="reportsBox">
                             <p><i class="fa-solid fa-file-export"></i> Stock Delivery History Analysis</p>
                             <div class="">
                                 <a href="database/pdf_reports.php?report=deliveryReport" target="_blank" class="exportBtns"><i class="fa-solid fa-file-pdf"></i> PDF</a>
-                                <a href="" class="exportBtns"><i class="fa-solid fa-file-excel"></i> Excel</a>
                             </div>
                         </div>
                     </div>

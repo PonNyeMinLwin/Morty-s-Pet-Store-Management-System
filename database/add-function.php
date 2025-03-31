@@ -16,7 +16,7 @@
     foreach($columns as $column) {
         if(in_array($column, ['created_at', 'updated_at'])) $value = date('Y-m-d H:i:s'); 
         else if ($column == 'created_by') $value = $user['id'];
-        else if ($column == 'password') $value = password_hash($_POST[$column], PASSWORD_DEFAULT);
+        else if ($column == 'password') $value = $_POST[$column];
         else if ($column == 'img') {
             // Uploading and moving image to directory
             $dir = "../inputs/product-images/";
