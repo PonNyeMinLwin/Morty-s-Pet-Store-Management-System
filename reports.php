@@ -21,7 +21,7 @@
                         <div class="reportsBox">
                             <p><i class="fa-solid fa-file-export"></i> Export Product Analysis</p>
                             <div class="">
-                                <a href="" class="exportBtns"><i class="fa-solid fa-file-pdf"></i> PDF</a>
+                                <a href="database/pdf_reports.php?report=productReport" target="_blank" class="exportBtns"><i class="fa-solid fa-file-pdf"></i> PDF</a>
                                 <a href="" class="exportBtns"><i class="fa-solid fa-file-excel"></i> Excel</a>
                             </div>
                         </div>
